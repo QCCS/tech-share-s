@@ -1,3 +1,4 @@
+let externals = _externals();
 module.exports = {
     entry: __dirname + '/src/index.js',//入口文件
     output: {
@@ -5,10 +6,21 @@ module.exports = {
         filename: 'index.js'//打包后的文件
     },
     target: 'node',
+    externals: externals,
     module: {
         rules: [
         ]
     },
     plugins: [
     ]
+}
+//外部依赖，不要打包进来
+function _externals() {
+    let manifest = require('./package.json');
+    let dependencies = manifest.dependencies;
+    let externals = {};
+    for (let p in dependencies) {
+        externals[p] = 'commonjs ' + p;
+    }
+    return externals;
 }

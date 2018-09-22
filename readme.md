@@ -155,14 +155,61 @@ git checkout -b share2
 1.test/json
 2.test/index.html
 
-没有框架写接口，操作数据库，实在有点麻烦
+这两个都对接口简单响应，没有操作数据库
+下面写一个接口，从数据库查询数据
+3.test/db
 
+连接数据库是一个复杂的过程，直接先安装数据库连接模块
+```
+npm i --save mysql
+```
+mysql 模块有额为的依赖
+打包配置文件需要加上，不要外部依赖加入进来
+不然import mysql 的时候把mysql模块导入进来，到时候运行就报错了；
+还是保留在node_modules依赖中，运行时自动找
 
+externals支持好几张模块加载方式，比如全局加载，与commonjs规范，
+具体可以查询文档
+我们这里用commonjs，commonjs系统规范就是node模块系统规范
+还有CMD,AMD,虽然这些都是民间定义的，但是已经运用广，在es模块系统推广中
+还会使用一段时间，这里不多讨论；
 
-----
+```
+externals:_externals();
+... ...
+//外部依赖
+function _externals() {
+    let manifest = require('./package.json');
+    let dependencies = manifest.dependencies;
+    let externals = {};
+    for (let p in dependencies) {
+        externals[p] = 'commonjs ' + p;
+    }
+    return externals;
+}
 
-安装koa2
+```
+然后这边只是演示一个简单api，简单连接方式
+```
+let db = mysql.createConnection({host: '127.0.0.1', user: 'root', password: 'mac123', database: 'information_schema'});
+    db.query("SELECT * FROM `USER_PRIVILEGES`;", (err, data)=>{
+        if(err){
+            console.log('err', err);
+        } else {
+            res.write(JSON.stringify(data));
+            res.end();
+        }
+    });
+```
+后面我们借助orm框架，演示一下比较规范，复杂的东西
+
+-------
+前面开发东西实在麻烦
+之后开始用框架koa2
 
 ```
 git checkout -b share3
 ```
+
+
+
