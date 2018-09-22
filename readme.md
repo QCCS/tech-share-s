@@ -151,3 +151,18 @@ node server重启
 ```
 git checkout -b share2
 ```
+两个简单get请求
+1.test/json
+2.test/index.html
+
+没有框架写接口，操作数据库，实在有点麻烦
+
+
+
+----
+
+安装koa2
+
+```
+git checkout -b share3
+```
