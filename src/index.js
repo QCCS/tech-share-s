@@ -1,4 +1,4 @@
-console.log("test");
+console.log("te st");
 
 // commonjs规范可以
 // const http = require('http');
@@ -7,12 +7,15 @@ console.log("test");
 //     res.end();
 // });
 
-
 // 用标准的 es6 模块系统
-import http from "http";
+import http from 'http';
+//需要用模块打包器
+import add from './add';
 
 const server = http.createServer((req, res) => {
-    res.write("es6");
+    console.log(add(11,21));
+
+    res.write("es98");
     res.end();
 });
 
