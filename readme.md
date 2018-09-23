@@ -210,6 +210,50 @@ let db = mysql.createConnection({host: '127.0.0.1', user: 'root', password: 'mac
 ```
 git checkout -b share3
 ```
+开发时不编译打包，最后发布的时候一次性打包。
+1.由于调试问题。我需要用编辑器打断点，打包好之后，我不方便。
+2.后端打包相比前端打包需求不是那么明显。前端打包主要一个原因
+就是压缩代码，混淆代码。减少网络传输时间，不要别人看源码。
+而服务端不存在。
 
+```
+//安装版本不要直接就安装，最好是到官网，npm看看版本
+//我这边看最新版本2.5.3，但是我习惯安装前一个稳定版本
+npm i --save koa@2.5.2
+```
+安装之后稍微改造index.js，更加简洁
+```
+import Koa from 'koa';
+const app = new Koa();
+// response
+app.use(ctx => {
+    ctx.body = 'Hello Koa';
+});
 
+app.listen(8080);
+```
+输入地址：网页显示Hello Koa
+服务测试ok
+koa依赖于中间件编程
 
+----
+
+安装路由中间价koa-router
+```
+npm i --save koa-router@7.4.0
+```
+安装路由之后，我把路由单独放一个模块里面
+做一个接口
+api/koa-test
+输出
+koa-router api
+
+--------
+
+开发的时候，然后每一个请求，我想看见服务器这边收到的请求输出。
+再次添加开发中间件logger,这个版本倒不是那么重要
+
+```
+git checkout -b share4
+npm i --save-dev koa-logger
+```

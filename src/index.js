@@ -1,7 +1,18 @@
-import http from 'http';
-import testApi from './test-api';
+import Koa from 'koa';
+import Router from 'koa-router';
+import router from './route/router';
 
-const server = http.createServer((req, res) => {
-    testApi(req, res);
-});
-server.listen(8080);
+const routerForAllow = new Router();
+const app = new Koa();
+
+// response
+// app.use(ctx => {
+//     ctx.body = 'Hello Koa';
+// });
+
+//使用路由中间件
+app.use(router.router.routes())
+    .use(routerForAllow.allowedMethods());
+
+//服务端口
+app.listen(8113);
