@@ -257,3 +257,5 @@ koa-router api
 git checkout -b share4
 npm i --save-dev koa-logger
 ```
+app.use(logger());
+这样就可以看见请求与相应了

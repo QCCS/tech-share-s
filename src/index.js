@@ -1,14 +1,13 @@
 import Koa from 'koa';
 import Router from 'koa-router';
 import router from './route/router';
+import logger from 'koa-logger';
 
 const routerForAllow = new Router();
 const app = new Koa();
 
-// response
-// app.use(ctx => {
-//     ctx.body = 'Hello Koa';
-// });
+//日志处理
+app.use(logger());
 
 //使用路由中间件
 app.use(router.router.routes())
