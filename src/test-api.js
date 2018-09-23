@@ -9,7 +9,7 @@ export default function testApi(req, res) {
     console.log("enter api")
     if (req.url === "/test/json") {
         let data = {
-            "name": "test1",
+            "name": "test",
             "age": "qccs"
         }
         res.write(JSON.stringify(data));
