@@ -7,7 +7,10 @@ module.exports = {
     },
     target: 'node',
     // devtool : "cheap-module-eval-source-map",
+    // devtool : "hidden-source-map",
+    devtool: "nosources-source-map",
     externals: externals,
+    mode: "development",
     module: {
         rules: [
         ]

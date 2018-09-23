@@ -259,3 +259,6 @@ npm i --save-dev koa-logger
 ```
 app.use(logger());
 这样就可以看见请求与相应了
+
+debug的话，这边不单独展开讲，
+可以把webpack开启调试模式，然后配置编辑器调试
