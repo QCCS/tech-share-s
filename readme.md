@@ -388,31 +388,43 @@ sql不熟练可以使用软件
 mysql -u root -p
 
 //创建一个数据库
-create database tech-share;
+create database tech-share character set utf8 collate utf8_general_ci;
 use database;
 
 //创建五个表
 user
 
 create table user (
-id int primary key unique not null,
-username varchar(20) not null,
+id int(11) primary key unique not null,
+name varchar(20) not null,
 password varchar(20) not null,
 mobile varchar(50) not null
 );
 
-
-create table roles (
-id primary key unique not null,
-role_name varchar(20) not null
+create table role (
+id int(11) primary key unique not null,
+name varchar(20) not null
 );
-
 
 create table permission (
-id primary key unique not null,
-role_name varchar(20) not null
+id int(11) primary key unique not null,
+name varchar(20) not null
 );
 
+create table user_role (
+id int(11) primary key unique not null,
+user_id int(11) not null default 0,
+role_id int(11) not null default 0
+);
+
+create table role_permission (
+id int(11) primary key unique not null,
+role_id int(11) not null default 0,
+permission_id int(11) not null default 0
+);
 
 
 ```
+mysql版本5.7
+记得加逗号，分号
+表名小写，下划线，单数
