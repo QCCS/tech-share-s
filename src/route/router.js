@@ -1,5 +1,6 @@
 // 定义路由
 import Router from 'koa-router';
+import loginController from '../controller/LoginController'
 // 路由配置
 const router = new Router(
     {
@@ -10,10 +11,7 @@ const router = new Router(
 router
     .get('/koa-test', async (ctx) => {
         ctx.body = "koa-router api";
-    });
-
-
-router
+    })
     .get('/koa-view', async (ctx) => {
         await ctx.render('index', {
             user: 'John'
@@ -24,7 +22,9 @@ router
             title: 'home page',
             user: 'John',
         });
-    });
+    })
+    //测试用get
+    .get('/login', loginController);
 
 export default {
     router: router,

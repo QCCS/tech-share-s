@@ -388,7 +388,7 @@ sql不熟练可以使用软件
 mysql -u root -p
 
 //创建一个数据库
-create database tech-share character set utf8 collate utf8_general_ci;
+create database tech_share character set utf8 collate utf8_general_ci;
 use database;
 
 //创建五个表
@@ -464,4 +464,51 @@ app.use(
 
 ```
 git checkout -b share9
+```
+```
+常规的目录
+
+config 配置
+route 路由
+
+dao 数据定义
+service 接口实现
+controller 接口逻辑控制
+
+middleware 中间件
+
+util 公共函数
+
+views 模板引擎
+static 静态文件
+```
+
+1.写统一配置文件
+2.然后我们在把每个响应头加上一下配置，让接口方便访问；
+3.写一个统一数据库连接池与查询函数
+注意异步函数写法
+4.分别写user的dao，service，contoller,并添加对应接口，测试；
+```
+写接口注意常用的几个属性
+ctx.params;路由参数 /:aa/:bb
+ctx.query;查询参数 ?aa=aa
+ctx.request.body;post body get没有
+```
+5.数据库插入数据方便测试
+```
+insert into table_name (field_name) values (field_value);
+eg:
+insert into user (name,password,mobile,id)
+ values 
+('json','mac123','15921552946',1);
+
+```
+方便测试把登录接口写成get方式，然后加路由后面，真实开发可以用post，md5加密
+后续会讲jwt授权登录
+
+这一节内容稍微多一点，各个文件夹，统一配置文件，数据库连接，sql，mvc等
+
+下一个分支集成orm框架
+```
+git checkout -b share10
 ```
