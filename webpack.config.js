@@ -6,9 +6,11 @@ module.exports = {
         filename: 'index.js'//打包后的文件
     },
     target: 'node',
-    mode:'development',
-    devtool : "cheap-module-eval-source-map",
+    // devtool : "cheap-module-eval-source-map",
+    // devtool : "hidden-source-map",
+    devtool: "nosources-source-map",
     externals: externals,
+    mode: "development",
     module: {
         rules: [
         ]
