@@ -642,4 +642,28 @@ NODE_ENV=production ../../node_modules/.bin/sequelize db:create
 接口需要token验证
 ```
 git checkout -b share13
+//身份验证
+npm install koa-jwt --save
+//签发token；jwt的规范实现
+npm install jsonwebtoken --save
+```
+模块功能可以查看npm介绍或者官网介绍
+
+然后在入口文件中配置
+然后在登录接口签发token
+token策略根据应用来定，是否有失效，具体失效时间，是否有refresh_token
+
+然后做登录之后的查询
+如果不带token到header上，就会返回401 Authentication Error
+
+把token带上，可以用命令行工具测试
+```
+curl -X GET -H 'authorization: Bearer ***token' http://localhost:8113/api/user
+```
+
+----
+有了token认证，然后把其他几个实体创建一下，
+开发几个restful风格接口
+```
+git checkout -b share14
 ```

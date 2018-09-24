@@ -2,6 +2,8 @@ import Koa from 'koa';
 import Router from 'koa-router';
 import logger from 'koa-logger';
 import staticServer from'koa-static';
+import koaJwt from 'koa-jwt';
+
 import indexController from './controller/index';
 import config from './config/config.dev.js';
 
@@ -10,6 +12,10 @@ import router from './route/router';
 
 const routerForAllow = new Router();
 const app = new Koa();
+
+//排除某些接口,不校验
+app.use(koaJwt({secret: config.secret.sign}).unless({path: [/^\/api\/login/,/^\/api\/register/]}));
+
 const koaSwagger = require('koa2-swagger-ui');
 
 //使用babel编译之后，输出的是跟路径，/
@@ -39,6 +45,13 @@ app.use(views(process.cwd() + '/dist/views', {
 
 //日志处理
 app.use(logger());
+
+//统一错误处理
+app.on('error', function (err, ctx) {
+    console.log(err);
+    console.log(ctx);
+});
+
 // 使用路由中间件
 app.use(indexController)
     .use(router.router.routes())

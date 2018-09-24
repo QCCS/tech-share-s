@@ -42,7 +42,9 @@
   "dependencies": {
     "chokidar": "^2.0.4",
     "ejs": "^2.6.1",
+    "jsonwebtoken": "^8.3.0",
     "koa": "^2.5.2",
+    "koa-jwt": "^3.5.1",
     "koa-router": "^7.4.0",
     "koa-static": "^5.0.0",
     "koa-views": "^6.1.4",

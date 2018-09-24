@@ -2,6 +2,7 @@
 import Router from 'koa-router';
 import loginController from '../controller/LoginController';
 import roleController from '../controller/roleController';
+import userController from '../controller/userController';
 import roleAddController from '../controller/roleAddController';
 
 // 路由配置
@@ -29,6 +30,7 @@ router
     //测试用get
     .get('/login', loginController)
     .get('/role/add', roleAddController)
+    .get('/user', userController)
     .get('/role', roleController);
 
 export default {
