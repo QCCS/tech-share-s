@@ -596,3 +596,10 @@ git checkout -b share11
 
 多添加config.prod.js,config/index
 然后修改util
+
+----
+
+专门讲
+sequelize-cli
+git checkout -b share12
+node_modules/.bin/sequelize init
