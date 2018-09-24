@@ -1,11 +1,15 @@
 import Koa from 'koa';
 import Router from 'koa-router';
-import router from './route/router';
 import logger from 'koa-logger';
+import koaStatic from'koa-static';
 
+import router from './route/router';
 const routerForAllow = new Router();
 const app = new Koa();
 
+app.use(koaStatic('./static'));
+
+console.log('./static')
 //日志处理
 app.use(logger());
 
