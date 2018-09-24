@@ -1,6 +1,9 @@
 // 定义路由
 import Router from 'koa-router';
-import loginController from '../controller/LoginController'
+import loginController from '../controller/LoginController';
+import roleController from '../controller/roleController';
+import roleAddController from '../controller/roleAddController';
+
 // 路由配置
 const router = new Router(
     {
@@ -24,7 +27,9 @@ router
         });
     })
     //测试用get
-    .get('/login', loginController);
+    .get('/login', loginController)
+    .get('/role/add', roleAddController)
+    .get('/role', roleController);
 
 export default {
     router: router,

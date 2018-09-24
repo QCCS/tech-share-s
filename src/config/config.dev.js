@@ -8,7 +8,7 @@ let config = {
         host: '127.0.0.1',
         user: 'root',
         password: 'mac123',
-        database: 'mytest1',
+        database: 'tech_share',
         port: '3306'
     },
     secret:{

@@ -512,3 +512,77 @@ insert into user (name,password,mobile,id)
 ```
 git checkout -b share10
 ```
+还是可以到npm搜索
+然后查看
+sequelize蛮流行
+
+npm i sequelize --save
+npm i sequelize-cli -dev
+
+
+多创建三个目录(如果不喜欢用orm的可以不用着几个文件夹)
+models                       # 数据库 model
+migrations                   # 数据迁移的目录
+seeders                      # 数据填充的目录
+
+写模型
+```
+role
+user
+user-role
+```
+```
+eg
+var User = sequelize.define('user', {
+  firstName: {
+    type: Sequelize.STRING,
+    field: 'first_name' // Will result in an attribute that is firstName when user facing but first_name in the database
+  },
+  lastName: {
+    type: Sequelize.STRING
+  }
+}, {
+  freezeTableName: true // Model 对应的表名将与model名相同
+});
+```
+
+写控制器
+```
+   let res = role.findOne();
+```
+配置路由
+```
+    .get('/role', roleController);
+```
+sequelize连接数据库
+```
+var sequelize = new Sequelize('database', 'username', 'password', {
+  host: 'localhost',
+  dialect: 'mysql',
+  pool: {
+    max: 5,
+    min: 0,
+    idle: 10000
+  },
+});
+```
+
+然后运行提示安装mysql2
+Please install mysql2 package manually
+npm i --save mysql2
+
+然后运行findone，没有数据，找不到
+添加一个数据
+先写service，然后controller，然后路由
+```
+import role from '../../models/role';
+async function createService(id,name) {
+    let res = await role.create({
+        id: id,
+        name: name
+    });
+    return res;
+}
+export default createService;
+```
+注意建表的时候设置utf8，不然中文插入数据有问题

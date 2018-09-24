@@ -26,4 +26,4 @@ async function registerService(id,name, password, mobile) {
     return res;
 }
 
-module.exports = registerService;
+export default registerService;
