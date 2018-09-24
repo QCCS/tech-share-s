@@ -586,3 +586,4 @@ async function createService(id,name) {
 export default createService;
 ```
 注意建表的时候设置utf8，不然中文插入数据有问题
+添加一个sql文件

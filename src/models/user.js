@@ -1,16 +1,22 @@
-module.exports = (sequelize, DataTypes) => sequelize.define(
-  'user',
-  {
-    id: {
-      type: DataTypes.INTEGER,
-      primaryKey: true,
-      autoIncrement: true,
+//用户模型
+import db from '../utils/sequelize-query';
+const {sequelize, Sequelize} = db;
+let user = sequelize.define('user',
+    {
+        id: {
+            type: Sequelize.INTEGER,
+            primaryKey: true,
+            autoIncrement: true,
+        },
+        name: {
+            type: Sequelize.STRING,
+            allowNull: false,
+        },
     },
-    name: DataTypes.STRING,
-    mobile: DataTypes.STRING,
-  },
-  {
-    tableName: 'user',
-  },
+    {
+        timestamps: false,//不要默认时间，不然默认生成时间
+        // tableName: 'user',
+        freezeTableName: true // Model 对应的表名将与model名相同
+    }
 );
-
+export default user;
