@@ -3,7 +3,7 @@
  * Sequelize数据库链接查询
  */
 import Sequelize from 'sequelize';
-import config from '../config/config.dev.js';
+import config from '../config/index';
 let mysqlConf = config.mysql;
 var sequelize = new Sequelize(mysqlConf.database, mysqlConf.user, mysqlConf.password, {
     host: mysqlConf.host,

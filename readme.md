@@ -593,3 +593,6 @@ export default createService;
 生产环境与开发环境配置
 
 git checkout -b share11
+
+多添加config.prod.js,config/index
+然后修改util

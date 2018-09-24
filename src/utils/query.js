@@ -3,7 +3,7 @@
  * 数据库链接查询
  */
 import mysql from 'mysql';
-import config from '../config/config.dev.js';
+import config from '../config/index';
 let mysqlConf = config.mysql;
 const pool = mysql.createPool({
     host: mysqlConf.host,
