@@ -2,15 +2,26 @@ import Koa from 'koa';
 import Router from 'koa-router';
 import logger from 'koa-logger';
 import staticServer from'koa-static';
+const koaSwagger = require('koa2-swagger-ui');
+
 import views from 'koa-views';
 import router from './route/router';
+
 const routerForAllow = new Router();
 const app = new Koa();
-
 //使用babel编译之后，输出的是跟路径，/
 console.log(__dirname);
 let staticPath = process.cwd()+"/dist/static";
 app.use(staticServer(staticPath));
+
+app.use(
+    koaSwagger({
+        routePrefix: '/swagger', // host at /swagger instead of default /docs
+        swaggerOptions: {
+            url: 'http://petstore.swagger.io/v2/swagger.json', // example path to json
+        },
+    }),
+);
 
 // Must be used before any router is used
 // 无模板引擎

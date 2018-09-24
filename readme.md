@@ -428,3 +428,30 @@ permission_id int(11) not null default 0
 mysql版本5.7
 记得加逗号，分号
 表名小写，下划线，单数
+
+---
+
+在准真正写接口之前，先说api文档
+文档也有很多中间件支持，我这边继承流行的swagger-ui
+```
+
+git checkout -b sahre8
+npm install koa2-swagger-ui --save
+```
+
+```
+const koaSwagger = require('koa2-swagger-ui');
+app.use(
+    koaSwagger({
+        routePrefix: '/swagger', // host at /swagger instead of default /docs
+        swaggerOptions: {
+            url: 'http://petstore.swagger.io/v2/swagger.json', // example path to json
+        },
+    }),
+);
+
+```
+更多写法看文档
+
+当然也可以不使用中间件，自己团队约定比较规范的写法
+然后自己写一个扫描器，自动扫描接口文件，生成json文件,然后生成前端可视化文档
