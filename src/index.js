@@ -2,7 +2,7 @@ import Koa from 'koa';
 import Router from 'koa-router';
 import logger from 'koa-logger';
 import staticServer from'koa-static';
-
+import views from 'koa-views';
 import router from './route/router';
 const routerForAllow = new Router();
 const app = new Koa();
@@ -11,6 +11,16 @@ const app = new Koa();
 console.log(__dirname);
 let staticPath = process.cwd()+"/dist/static";
 app.use(staticServer(staticPath));
+
+// Must be used before any router is used
+// 无模板引擎
+// app.use(views(process.cwd() + '/dist/views'));
+// ejs模板引擎
+// 配置扩展名 ejs
+app.use(views(process.cwd() + '/dist/views', {
+    extension: 'ejs'
+    // map: {html: 'ejs'}
+}))
 
 //日志处理
 app.use(logger());

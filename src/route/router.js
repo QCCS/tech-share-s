@@ -12,6 +12,20 @@ router
         ctx.body = "koa-router api";
     });
 
+
+router
+    .get('/koa-view', async (ctx) => {
+        await ctx.render('index', {
+            user: 'John'
+        });
+    })
+    .get('/koa-ejs', async (ctx) => {
+        await ctx.render('home', {
+            title: 'home page',
+            user: 'John',
+        });
+    });
+
 export default {
     router: router,
 };

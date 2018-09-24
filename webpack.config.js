@@ -19,7 +19,11 @@ module.exports = {
     plugins: [
         new copyWebpackPlugin([{
             from:__dirname+'/src/static',//打包的静态资源目录地址
-            to:'./static' //打包到dist下面的static
+            to:'./static' //打包到dist下面的 static
+        }]),
+        new copyWebpackPlugin([{
+            from:__dirname+'/src/views',//打包的模版资源目录地址
+            to:'./views' //打包到dist下面的 views
         }]),
     ]
 }

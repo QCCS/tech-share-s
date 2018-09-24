@@ -288,3 +288,76 @@ new copyWebpackPlugin([{
 git checkout -b share6
 npm install --save koa-views
 ```
+使用之前还是需要到官网或npmjs看看使用方式
+支持各种模板引擎（需要安装）
+比如必须在路由配置前配置目标路径
+... ...
+
+安装之后，简单使用
+
+1.创建views文件夹
+2.配置webpack，模板文件也是静态文件
+3.修改入口文件
+```
+// Must be used before any router is used
+//默认支持静态文件输出
+app.use(views(process.cwd() + '/dist/views'));
+```
+4.添加测试路由
+```
+router
+    .get('/koa-view', async (ctx) => {
+        //注意异步函数
+        await ctx.render('index', {
+            user: 'John'
+        });
+    });
+```
+-----
+
+安装一个模板引擎
+```
+npm i --save ejs
+```
+添加配置
+```
+app.use(views(process.cwd() + '/dist/views', {
+  extension: 'ejs'
+}))
+//路由
+.get('/koa-ejs', async (ctx) => {
+        await ctx.render('home', {
+            title: 'home page',
+            user: 'John',
+        });
+    });
+```   
+
+写一个模板文件ejs结尾，不然模板引擎不认识
+```
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title><%= title %></title>
+    </head>
+    <body>
+    ejs file
+    <%= user %>
+    </body>
+    </html>
+```
+输出，两个变量
+
+----
+
+也可以让后缀名设置 html
+html 结尾使用 ejs 模板引擎
+app.use(views(process.cwd() + '/dist/views', {
+    map: {
+      html: 'ejs'
+    }
+}))
+
+有了模板引擎，可以向前端一样写页面
+把变量放在js里面，渲染到页面中
