@@ -1,4 +1,5 @@
 let externals = _externals();
+const copyWebpackPlugin = require('copy-webpack-plugin');
 module.exports = {
     entry: __dirname + '/src/index.js',//入口文件
     output: {
@@ -16,6 +17,10 @@ module.exports = {
         ]
     },
     plugins: [
+        new copyWebpackPlugin([{
+            from:__dirname+'/src/static',//打包的静态资源目录地址
+            to:'./static' //打包到dist下面的static
+        }]),
     ]
 }
 //外部依赖，不要打包进来

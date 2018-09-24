@@ -7,7 +7,6 @@ import router from './route/router';
 const routerForAllow = new Router();
 const app = new Koa();
 
-
 //使用babel编译之后，输出的是跟路径，/
 console.log(__dirname);
 let staticPath = process.cwd()+"/dist/static";

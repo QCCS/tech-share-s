@@ -269,6 +269,22 @@ debug的话，这边不单独展开讲，
 -----
 
 静态资源服务与模板引擎
-
+```
 git checkout -b share5
 npm install --save koa-static
+```
+打包拷贝静态文件夹
+```
+
+npm install copy-webpack-plugin --save-dev
+
+new copyWebpackPlugin([{
+    from:__dirname+'/src/public',//打包的静态资源目录地址
+    to:'./static' //打包到dist下面的 static
+}]),
+```
+模板引擎
+```
+git checkout -b share6
+npm install --save koa-views
+```
