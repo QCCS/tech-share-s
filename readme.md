@@ -428,3 +428,12 @@ permission_id int(11) not null default 0
 mysql版本5.7
 记得加逗号，分号
 表名小写，下划线，单数
+
+
+在准真正写接口之前，先说api文档
+文档也有很多中间件支持，我这边继承流行的swagger-ui
+```
+
+git checkout -b sahre8
+npm install koa2-swagger-ui --save
+```
