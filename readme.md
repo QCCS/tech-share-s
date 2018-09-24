@@ -388,6 +388,7 @@ sql不熟练可以使用软件
 mysql -u root -p
 
 //创建一个数据库
+注意设置字符集，不然插入中文有问题
 create database tech-share character set utf8 collate utf8_general_ci;
 use database;
 
