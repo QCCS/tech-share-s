@@ -1,5 +1,5 @@
 //用户-角色模型
-import db from '../utils/sequelize-query';
+import db from '../utils/sequelizeQuery';
 const {sequelize, Sequelize} = db;
 let userRole = sequelize.define('user_role',
     {

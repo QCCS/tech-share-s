@@ -8,6 +8,7 @@ let mysqlConf = config.mysql;
 var sequelize = new Sequelize(mysqlConf.database, mysqlConf.user, mysqlConf.password, {
     host: mysqlConf.host,
     dialect: 'mysql',
+    port: mysqlConf.port,
     pool: {
         max: 5,
         min: 0,

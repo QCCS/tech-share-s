@@ -1,5 +1,5 @@
 //用户模型
-import db from '../utils/sequelize-query';
+import db from '../utils/sequelizeQuery';
 const {sequelize, Sequelize} = db;
 let user = sequelize.define('user',
     {

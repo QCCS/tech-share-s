@@ -1,7 +1,7 @@
 //已写接口样例
 //查询role
 //创建角色
-import db from '../utils/sequelize-query';
+import db from '../utils/sequelizeQuery';
 const {sequelize, Sequelize} = db;
 let role = sequelize.define('role',
     {
