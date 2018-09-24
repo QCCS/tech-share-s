@@ -260,5 +260,15 @@ npm i --save-dev koa-logger
 app.use(logger());
 这样就可以看见请求与相应了
 
+
+到这个分支，插入一个点，debug
 debug的话，这边不单独展开讲，
 可以把webpack开启调试模式，然后配置编辑器调试
+
+
+-----
+
+静态资源服务与模板引擎
+
+git checkout -b share5
+npm install --save koa-static
