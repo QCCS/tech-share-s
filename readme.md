@@ -368,7 +368,7 @@ ssr,同构应用大家了解一下
 
 下面为了讲后续内容，也方便大家理解
 设计几个表来讲
-基于用户角色的权限控制，简称rbac role base auth control
+基于用户角色的权限控制，简称rbac role base access control
 
 ###三个基本表
 用户表
@@ -380,4 +380,39 @@ ssr,同构应用大家了解一下
 角色权限表
 ```
 git checkout -b share7
+```
+
+sql不熟练可以使用软件
+```
+//登录数据库
+mysql -u root -p
+
+//创建一个数据库
+create database tech-share;
+use database;
+
+//创建五个表
+user
+
+create table user (
+id int primary key unique not null,
+username varchar(20) not null,
+password varchar(20) not null,
+mobile varchar(50) not null
+);
+
+
+create table roles (
+id primary key unique not null,
+role_name varchar(20) not null
+);
+
+
+create table permission (
+id primary key unique not null,
+role_name varchar(20) not null
+);
+
+
+
 ```
