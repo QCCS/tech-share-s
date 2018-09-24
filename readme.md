@@ -361,3 +361,5 @@ app.use(views(process.cwd() + '/dist/views', {
 
 有了模板引擎，可以向前端一样写页面
 把变量放在js里面，渲染到页面中
+
+ssr,同构应用大家了解一下
