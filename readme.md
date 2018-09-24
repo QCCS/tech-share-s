@@ -368,7 +368,7 @@ ssr,同构应用大家了解一下
 
 下面为了讲后续内容，也方便大家理解
 设计几个表来讲
-基于用户角色的权限控制，简称rbac role base auth control
+基于用户角色的权限控制，简称rbac role base access control
 
 ###三个基本表
 用户表
