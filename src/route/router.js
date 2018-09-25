@@ -46,10 +46,13 @@ router
     //费用curd
     .post('/fee', async (ctx) => {
         let data = ctx.request.body;
+        console.log(ctx.user);
         console.log(data);
         let time = new Date();
         console.log(time);
-        ctx.body = await addFee(data.title, data.des, data.total, time, data.userId);
+        //从token中解码获取
+        let userId = ctx.user.id;
+        ctx.body = await addFee(data.title, data.des, data.total, time, userId);
     })
     .delete('/fee/:id', async (ctx) => {
         console.log(ctx.params.id);
@@ -59,44 +62,49 @@ router
     })
     .put('/fee', async (ctx) => {
         let data = ctx.request.body;
+        console.log(ctx.user);
+        console.log(data);
         let time = new Date();
-        ctx.body = await updateFee(data.title, data.des, data.total, time, data.userId, data.id);
+        console.log(time);
+        //从token中解码获取
+        let userId = ctx.user.id;
+        ctx.body = await updateFee(data.title, data.des, data.total, time, userId, data.id);
     })
     .get('/feeList', async (ctx) => {
         ctx.body = await getFeeList();
     })
     .get('/fee', async (ctx) => {
+        //以描述或者名称搜索
         let data = ctx.request.query;
-        console.log(data);
         ctx.body = await searchFee(data.title, data.des);
     })
     .get('/fee/:id', async (ctx) => {
         console.log(ctx.params.id);
         ctx.body = await getFeeInfo(ctx.params.id);
     })
-    .post('permission', async (ctx) => {
-        let data = ctx.body;
+    .post('/permission', async (ctx) => {
+        let data = ctx.request.body;
         let permission = await permissionService.createPermission(data.id,data.name);
         ctx.body = permission;
         console.log(permission);
     })
-    .delete('permission/:id', async (ctx) => {
+    .delete('/permission/:id', async (ctx) => {
         let b = await permissionService.deletePermission(ctx.params.id);
         ctx.body = b;
         console.log(b);
     })
-    .put('permission', async (ctx) => {
-        let data = ctx.body;
+    .put('/permission', async (ctx) => {
+        let data = ctx.request.body;
         let permission = await permissionService.updatePermission(data.id,data.name);
         ctx.body = permission;
         console.log(permission);
     })
-    .get('permission/:id', async (ctx) => {
+    .get('/permission/:id', async (ctx) => {
         let permission = await permissionService.getPermission(ctx.params.id);
         ctx.body = permission;
         console.log(permission)
     })
-    .get('permission', async (ctx) => {
+    .get('/permission', async (ctx) => {
         let permissions = await permissionService.getAllPermission();
         ctx.body = permissions;
         console.log(permissions)
@@ -106,3 +114,74 @@ router
 export default {
     router: router,
 };
+
+// 接口测试
+/*先获取token
+get
+* http://localhost:8113/api/login?mobile=15921552946&password=mac123
+*
+* http://localhost:8113
+*
+* get
+* http://localhost:8113/api/koa-test
+*
+* get
+* http://localhost:8113/api/koa-ejs
+*
+* post
+* http://localhost:8113/api/fee
+* {
+    "des":"第一个份额与",
+    "title":"test fee1",
+    "total":"12",
+    "password":"mac1234"
+}
+
+get 单个
+http://localhost:8113/api/fee/11
+
+put
+http://localhost:8113/api/fee
+{
+    "des":"第一个份额与",
+    "title":"test 1111fee1",
+    "total":"12",
+    "id":12,
+    "password":"mac1234"
+}
+
+get 列表
+http://localhost:8113/api/feelist
+
+get 搜索
+http://localhost:8113/api/fee?title=1111fee1&des=1
+
+permission
+
+post
+http://localhost:8113/api/permission
+{
+    "name":"经理",
+    "id":1
+}
+
+delete
+http://localhost:8113/api/permission/1
+
+put
+http://localhost:8113/api/permission
+{
+    "name":"经理111",
+    "id":1
+}
+
+get 查询某一个
+http://localhost:8113/api/permission/2
+
+get 查询所有
+http://localhost:8113/api/permission
+
+
+文档 doc
+http://localhost:8113/doc.json
+* */

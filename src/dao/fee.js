@@ -11,7 +11,7 @@
 * 时间 date_at
 * 关联用户id u_id
 * */
-const query = require('../utils/query');
+import query from '../utils/query';
 
 const sql = {
     insert: `

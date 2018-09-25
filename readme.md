@@ -701,3 +701,9 @@ git checkout -b share15
 把接口完善之后，把数据库与表创建一下 tech_share_dev
 导出sql
 然后先用postman 接口测试
+
+```
+//请求体处理，方便获取查询参数
+npm i --save koa-bodyparser
+```
+接口测试通过
