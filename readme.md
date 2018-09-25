@@ -668,4 +668,33 @@ curl -X GET -H 'authorization: Bearer ***token' http://localhost:8113/api/user
 git checkout -b share14
 ```
 开发接口的时候看是喜欢写sql还是直接用orm库
-我这边直接用sql
+我这边用sql,与orm库分布演示两个实体的curd
+
+1.费用的curd--sql
+2.权限的curd--orm
+
+###针对费用 fee
+1.封装dao层
+2.封装service
+3.因为简单且是演示（真实项目，可以考虑走controller），
+直接添加到路由，不走控制器
+
+请求接口的时候，token校验失败提示不友好，
+并且顺便把token中带有的用户信息可以解密出来
+可以写一个中间件处理一下
+error.js
+import error from './middleware/error';
+
+###针对权限
+1.定义模型
+2.封装service
+3.因为简单且是演示（真实项目，可以考虑走controller），
+直接添加到路由，不走控制器
+//todo
+添加备注
+
+有一些接口设计与定义
+另外切一个分支来完成接口开发与测试
+```
+git checkout -b share15
+```

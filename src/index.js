@@ -6,13 +6,14 @@ import koaJwt from 'koa-jwt';
 
 import indexController from './controller/index';
 import config from './config/config.dev.js';
-
+//拦截校验token，解密token
+import error from './middleware/error';
 import views from 'koa-views';
 import router from './route/router';
 
 const routerForAllow = new Router();
 const app = new Koa();
-
+app.use(error());
 //排除某些接口,不校验
 app.use(koaJwt({secret: config.secret.sign}).unless({path: [/^\/api\/login/,/^\/api\/register/]}));
 
