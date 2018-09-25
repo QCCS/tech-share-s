@@ -803,3 +803,7 @@ pm2 start dist/index.js -i 0 --name "tech-share-s"
 
 4.访问
 http://47.100.13.168:9113/swagger
+
+
+nginx配置
+git checkout -b share17
