@@ -75,21 +75,33 @@ router
         ctx.body = await getFeeInfo(ctx.params.id);
     })
     .post('permission', async (ctx) => {
-        //todo
-        ctx.body = await permissionService.createPermission();
+        let data = ctx.body;
+        let permission = await permissionService.createPermission(data.id,data.name);
+        ctx.body = permission;
+        console.log(permission);
     })
     .delete('permission/:id', async (ctx) => {
-        //todo
-        ctx.body = await permissionService.deletePermission();
+        let b = await permissionService.deletePermission(ctx.params.id);
+        ctx.body = b;
+        console.log(b);
     })
     .put('permission', async (ctx) => {
-        //todo
-        ctx.body = await permissionService.updatePermission();
+        let data = ctx.body;
+        let permission = await permissionService.updatePermission(data.id,data.name);
+        ctx.body = permission;
+        console.log(permission);
     })
     .get('permission/:id', async (ctx) => {
-        //todo
-        ctx.body = await permissionService.getPermission();
+        let permission = await permissionService.getPermission(ctx.params.id);
+        ctx.body = permission;
+        console.log(permission)
     })
+    .get('permission', async (ctx) => {
+        let permissions = await permissionService.getAllPermission();
+        ctx.body = permissions;
+        console.log(permissions)
+    })
+
 
 export default {
     router: router,
