@@ -806,4 +806,27 @@ http://47.100.13.168:9113/swagger
 
 
 nginx配置
+```
 git checkout -b share17
+```
+代理
+http://47.100.13.168:9113/
+nginx配置
+```
+server {
+   listen 80;
+   server_name share.json119.com;
+
+   location / {
+       proxy_set_header   X-Real-IP $remote_addr;
+       proxy_set_header   Host      $http_host;
+       proxy_pass         http://127.0.0.1:9113;
+   }
+}
+```
+
+
+之后访问
+```
+http://share.json119.com/api/login?mobile=15921552946&password=mac123
+```
