@@ -15,7 +15,7 @@ const routerForAllow = new Router();
 const app = new Koa();
 app.use(error());
 //排除某些接口,不校验
-app.use(koaJwt({secret: config.secret.sign}).unless({path: [/^\/api\/login/,/^\/api\/register/]}));
+app.use(koaJwt({secret: config.secret.sign}).unless({path: [/^\/doc/,/^\/swagger/,/^\/api\/login/,/^\/api\/register/]}));
 
 const koaSwagger = require('koa2-swagger-ui');
 
