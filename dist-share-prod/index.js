@@ -1290,7 +1290,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var koa2_swagger_ui__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! koa2-swagger-ui */ "koa2-swagger-ui");
 /* harmony import */ var koa2_swagger_ui__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(koa2_swagger_ui__WEBPACK_IMPORTED_MODULE_6__);
 /* harmony import */ var _controller_index__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./controller/index */ "./src/controller/index.js");
-/* harmony import */ var _config_config_dev_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./config/config.dev.js */ "./src/config/config.dev.js");
+/* harmony import */ var _config_index__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./config/index */ "./src/config/index.js");
 /* harmony import */ var _middleware_error__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./middleware/error */ "./src/middleware/error.js");
 /* harmony import */ var koa_views__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! koa-views */ "koa-views");
 /* harmony import */ var koa_views__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(koa_views__WEBPACK_IMPORTED_MODULE_10__);
@@ -1318,7 +1318,7 @@ let staticPath = process.cwd()+"/dist/static";
 app.use(koa_static__WEBPACK_IMPORTED_MODULE_3___default()(staticPath));
 
 //排除某些接口,不校验
-app.use(koa_jwt__WEBPACK_IMPORTED_MODULE_4___default()({secret: _config_config_dev_js__WEBPACK_IMPORTED_MODULE_8__["default"].secret.sign}).unless({path: [
+app.use(koa_jwt__WEBPACK_IMPORTED_MODULE_4___default()({secret: _config_index__WEBPACK_IMPORTED_MODULE_8__["default"].secret.sign}).unless({path: [
     /^\/api\/login/,
     /^\/doc/,//文档忽略
     /^\/swagger/,
@@ -1329,7 +1329,7 @@ app.use(
     koa2_swagger_ui__WEBPACK_IMPORTED_MODULE_6___default()({
         routePrefix: '/swagger', // host at /swagger instead of default /docs
         swaggerOptions: {
-            url: 'http://localhost:'+_config_config_dev_js__WEBPACK_IMPORTED_MODULE_8__["default"].port+'/doc.json', // example path to json
+            url: '/doc.json', // example path to json
             //json可以考虑模块导入，复用
         },
     }),
@@ -1363,7 +1363,7 @@ app.use(_controller_index__WEBPACK_IMPORTED_MODULE_7__["default"])
     .use(routerForAllow.allowedMethods());
 
 //服务端口
-app.listen(_config_config_dev_js__WEBPACK_IMPORTED_MODULE_8__["default"].port);
+app.listen(_config_index__WEBPACK_IMPORTED_MODULE_8__["default"].port);
 
 /* WEBPACK VAR INJECTION */}.call(this, "/"))
 

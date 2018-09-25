@@ -7,7 +7,7 @@ import bodyParser from 'koa-bodyparser';
 import koaSwagger from 'koa2-swagger-ui';
 
 import indexController from './controller/index';
-import config from './config/config.dev.js';
+import config from './config/index';
 //拦截校验token，解密token
 import error from './middleware/error';
 import views from 'koa-views';
@@ -32,7 +32,7 @@ app.use(
     koaSwagger({
         routePrefix: '/swagger', // host at /swagger instead of default /docs
         swaggerOptions: {
-            url: 'http://localhost:'+config.port+'/doc.json', // example path to json
+            url: '/doc.json', // example path to json
             //json可以考虑模块导入，复用
         },
     }),

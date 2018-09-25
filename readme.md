@@ -781,7 +781,21 @@ pm2 部署
 git checkout -b share15
 ```
 我这边手动部署一下
+服务器先要安装mysql，pm2,
+
 0.修改端口，打包代码
 1.clone代码
+git clone https://github.com/QCCS/tech-share-s.git
+cd tech-share-s
+git checkout -b share16
+git pull origin share16
+
 2.创建数据库 source
+cd src
+source tech_share_prod.sql;
+
 3.启动
+cd ..
+npm i --no-package-lock
+npm run webpackProd
+NODE_ENV=prod pm2 start dist/index.js -i 0 --name "tech-share-s"
