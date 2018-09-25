@@ -800,3 +800,6 @@ npm i --no-package-lock
 修改配置文件
 npm run webpackProd
 pm2 start dist/index.js -i 0 --name "tech-share-s"
+
+4.访问
+http://47.100.13.168:9113/swagger
