@@ -3,7 +3,8 @@
  */
 import configDev from './config.dev.js';
 import configProd from './config.prod.js';
-const env = process.env.NODE_ENV || 'development';
+let env = process.env.NODE_ENV || 'development';
+// env = "prod";
 let conf = configDev;
 if(env === "prod"){
     conf = configProd;

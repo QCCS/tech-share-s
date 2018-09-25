@@ -797,5 +797,6 @@ source tech_share_prod.sql;
 3.启动
 cd ..
 npm i --no-package-lock
+修改配置文件
 npm run webpackProd
-NODE_ENV=prod pm2 start dist/index.js -i 0 --name "tech-share-s"
+pm2 start dist/index.js -i 0 --name "tech-share-s"
