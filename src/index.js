@@ -27,8 +27,6 @@ app.use(koaJwt({secret: config.secret.sign}).unless({path: [
     /^\/swagger/,
     /^\/api\/register/
 ]}));
-//token错误校验必须在 koaJwt 之后
-app.use(error());
 
 app.use(
     koaSwagger({
@@ -39,7 +37,8 @@ app.use(
         },
     }),
 );
-
+//token错误校验必须在 koaJwt 之后
+app.use(error());
 
 // Must be used before any router is used
 // 无模板引擎
