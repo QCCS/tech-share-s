@@ -32,7 +32,7 @@ app.use(
     koaSwagger({
         routePrefix: '/swagger', // host at /swagger instead of default /docs
         swaggerOptions: {
-            url: 'http://localhost:8113/doc.json', // example path to json
+            url: 'http://localhost:'+config.port+'/doc.json', // example path to json
             //json可以考虑模块导入，复用
         },
     }),

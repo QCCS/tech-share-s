@@ -3,7 +3,7 @@
  * 配置信息
  */
 let config = {
-    port: 8113,
+    port: 9113,
     mysql: {
         host: '127.0.0.1',
         user: 'root',

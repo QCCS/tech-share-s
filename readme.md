@@ -780,3 +780,8 @@ pm2 部署
 ```
 git checkout -b share15
 ```
+我这边手动部署一下
+0.修改端口，打包代码
+1.clone代码
+2.创建数据库 source
+3.启动
