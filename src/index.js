@@ -23,8 +23,7 @@ app.use(staticServer(staticPath));
 //排除某些接口,不校验
 app.use(koaJwt({secret: config.secret.sign}).unless({path: [
     /^\/api\/login/,
-    /^\/doc\.json/,//文档忽略
-    /^\/api\/swagger/,
+    /^\/doc/,//文档忽略
     /^\/swagger/,
     /^\/api\/register/
 ]}));
