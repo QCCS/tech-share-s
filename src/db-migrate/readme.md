@@ -15,3 +15,13 @@ NODE_ENV=production ../../node_modules/.bin/sequelize db:create
 4.表被创建，没有数据，填充数据
 ../../node_modules/.bin/sequelize seed:generate --name demo-user
 ../../node_modules/.bin/sequelize db:seed:all
+
+5.修改表结构（占时没发现有文档介绍相关api）
+https://github.com/sequelize/sequelize/issues/7702
+修改之后模型，重新运行
+../../node_modules/.bin/sequelize db:migrate是不行的
+需要回滚到最初状态
+../../node_modules/.bin/sequelize db:migrate:undo
+
+需要扩展一下工具,让修改之后的表结构正常
+../../node_modules/.bin/sequelize db:migrate:update
