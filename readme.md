@@ -668,4 +668,4 @@ curl -X GET -H 'authorization: Bearer ***token' http://localhost:8113/api/user
 git checkout -b share14
 ```
 开发接口的时候看是喜欢写sql还是直接用orm库
-我这边直接用sql
+我这边用sql,与orm库分布演示两个实体的curd
