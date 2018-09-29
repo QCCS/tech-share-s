@@ -69,3 +69,15 @@ module.exports = {
 修改迁移文件之前，最好先修改对应，不然到时候插入数据报错
 
 ---
+npm i koa2-file-upload
+
+app.use(uploader(options))
+
+
+post api/upload
+headers
+enctype=multipart/form-data
+body
+{
+file:""
+}
