@@ -4,7 +4,7 @@ async function createPostTag(ctx) {
     console.log(data);
     //事务
     //需要插入 post_postTag
-    let postTag = await postTagService.createPostTag(data.id,data.name);
+    let postTag = await postTagService.createPostTag(data.post_id,data.tag_id);
     ctx.body = postTag;
     console.log(postTag);
 }

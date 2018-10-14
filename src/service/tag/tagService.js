@@ -3,15 +3,16 @@ import tag from '../../models/tag';
 async function createTag(user_id, tag_name) {
     let res = await tag.create({
         user_id: user_id,
-        name: tag_name
+        tag: tag_name
     });
     return res;
 }
 
-async function deleteTag(id) {
+async function deleteTag(user_id, id) {
     let res = await tag.destroy({
         where: {
-            id: id
+            id,
+            user_id
         }
     });
     // sql
@@ -19,14 +20,18 @@ async function deleteTag(id) {
     return res;
 }
 
-async function updateTag(id, name) {
-    let res = await tag.update({
-        name: name
-    },{
-        where: {
-            id: id
+async function updateTag(user_id, id, name) {
+    let res = await tag.update(
+        {
+            name: name
+        },
+        {
+            where: {
+                user_id,
+                id
+            }
         }
-    });
+    );
     return res;
 }
 

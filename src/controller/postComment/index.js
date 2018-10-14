@@ -1,10 +1,9 @@
 import postCommentService from '../../service/postComment/postCommentService';
 async function createPostComment(ctx) {
     let data = ctx.request.body;
-    console.log(data);
     //事务
     //需要插入 post_postComment
-    let postComment = await postCommentService.createPostComment(data.id,data.name);
+    let postComment = await postCommentService.createPostComment(data.post_id,data.comment_id);
     ctx.body = postComment;
     console.log(postComment);
 }

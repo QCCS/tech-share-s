@@ -1,6 +1,6 @@
 import image from '../../models/image';
 
-async function createImage(user_id, name,path,size) {
+async function createImage(user_id, name, path, size) {
     let res = await image.create({
         user_id: user_id,
         name: name,
@@ -10,10 +10,11 @@ async function createImage(user_id, name,path,size) {
     return res;
 }
 
-async function deleteImage(id) {
+async function deleteImage(user_id,id) {
     let res = await image.destroy({
         where: {
-            id: id
+            user_id,
+            id
         }
     });
     // sql
@@ -21,14 +22,20 @@ async function deleteImage(id) {
     return res;
 }
 
-async function updateImage(id, name) {
-    let res = await image.update({
-        name: name
-    },{
-        where: {
-            id: id
+async function updateImage(id, user_id, name, path, size) {
+    let res = await image.update(
+        {
+            name: name,
+            path: path,
+            size: size,
+        },
+        {
+            where: {
+                id,
+                user_id
+            }
         }
-    });
+    );
     return res;
 }
 

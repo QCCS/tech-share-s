@@ -1,30 +1,48 @@
 // 图片 curd
 import imageService from '../../service/image/imageService';
+
 async function createImage(ctx) {
     let data = ctx.request.body;
-    console.log(data);
+    let user = ctx.user;
     //事务
     //需要插入 post_image
-    let image = await imageService.createImage(data.id,data.name);
+    let image = await imageService.createImage(
+        user.id,
+        data.name,
+        data.path,
+        data.size
+    );
     ctx.body = image;
     console.log(image);
 }
+
 async function deleteImage(ctx) {
-    let b = await imageService.deleteImage(ctx.params.id);
+    let user = ctx.user;
+    let b = await imageService.deleteImage(user.id,ctx.params.id);
     ctx.body = b;
     console.log(b);
 }
+
 async function updateImage(ctx) {
     let data = ctx.request.body;
-    let image = await imageService.updateImage(data.id,data.name);
+    let user = ctx.user;
+    let image = await imageService.updateImage(
+        data.id,
+        user.id,
+        data.name,
+        data.path,
+        data.size
+    );
     ctx.body = image;
     console.log(image);
 }
+
 async function getImage(ctx) {
     let image = await imageService.getImage(ctx.params.id);
     ctx.body = image;
     console.log(image)
 }
+
 async function getAllImage(ctx) {
     let image = await imageService.getAllImage();
     ctx.body = image;

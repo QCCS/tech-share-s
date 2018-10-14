@@ -1,5 +1,5 @@
 import postComment from '../../models/post_comment';
-
+import db from '../../utils/sequelizeQuery';
 async function createPostComment(post_id, comment_id) {
     let res = await postComment.create({
         post_id,
@@ -28,11 +28,20 @@ async function getAllPostComment() {
     let res = await postComment.findAll();
     return res;
 }
+async function getCommentByPostId(post_id) {
+    let res = await postComment.findAll({
+        where: {
+            post_id
+        }
+    });
+    return res;
+}
 
 let postCommentService = {
     createPostComment,
     deletePostComment,
     getPostComment,
-    getAllPostComment
+    getAllPostComment,
+    getCommentByPostId
 }
 export default postCommentService;

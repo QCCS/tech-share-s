@@ -1,8 +1,8 @@
 import post from '../../models/post';
 
-async function createPost(user_id, title,desc,content,is_delete,is_draft) {
+async function createPost(user_id, title, desc, content, is_delete, is_draft) {
     let res = await post.create({
-        user_id: user_id,
+        user_id,
         title,
         desc,
         content,
@@ -12,10 +12,11 @@ async function createPost(user_id, title,desc,content,is_delete,is_draft) {
     return res;
 }
 
-async function deletePost(id) {
+async function deletePost(user_id, id) {
     let res = await post.destroy({
         where: {
-            id: id
+            id,
+            user_id
         }
     });
     // sql
@@ -23,14 +24,22 @@ async function deletePost(id) {
     return res;
 }
 
-async function updatePost(id, name) {
-    let res = await post.update({
-        name: name
-    },{
-        where: {
-            id: id
+async function updatePost(user_id, id, title, desc, content, is_delete, is_draft) {
+    let res = await post.update(
+        {
+            title,
+            desc,
+            content,
+            is_delete,
+            is_draft,
+        },
+        {
+            where: {
+                user_id,
+                id
+            }
         }
-    });
+    );
     return res;
 }
 

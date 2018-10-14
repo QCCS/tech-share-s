@@ -1141,3 +1141,41 @@ router
     .get('/comment', commentController.getAllComment)
 ```
 注意：模型与迁移文件是下划线命名，service 与 controller 是驼峰命名
+
+测试 api
+comment
+curd ok
+
+image
+curd ok
+
+post
+curd ok
+
+tag
+curd ok
+
+post_comment
+post_tag
+post_like
+post_read
+curd ok
+
+创建评论表
+创建博客评论关联表
+
+通过 博客id 查询该博客评论
+
+博客系统完成
+用户注册，登陆
+博客评论
+博客标签
+博客点赞
+博客阅读量
+
+todo
+事务
+redis
+用户多次点赞
+
+

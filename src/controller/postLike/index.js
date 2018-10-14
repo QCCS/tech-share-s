@@ -2,14 +2,16 @@ import postLikeService from '../../service/postLike/postLikeService';
 async function createPostLike(ctx) {
     let data = ctx.request.body;
     console.log(data);
+    let user = ctx.user;
     //事务
     //需要插入 post_postLike
-    let postLike = await postLikeService.createPostLike(data.id,data.name);
+    let postLike = await postLikeService.createPostLike(user.id,data.post_id);
     ctx.body = postLike;
     console.log(postLike);
 }
 async function deletePostLike(ctx) {
-    let b = await postLikeService.deletePostLike(ctx.params.id);
+    let user = ctx.user;
+    let b = await postLikeService.deletePostLike(user.id,ctx.params.id);
     ctx.body = b;
     console.log(b);
 }

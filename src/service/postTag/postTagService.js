@@ -30,11 +30,20 @@ async function getAllPostTag() {
     let res = await postTag.findAll();
     return res;
 }
+async function getTagByPostId(post_id) {
+    let res = await postTag.findAll({
+        where: {
+            post_id
+        }
+    });
+    return res;
+}
 
 let postTagService = {
     createPostTag,
     deletePostTag,
     getPostTag,
-    getAllPostTag
+    getAllPostTag,
+    getTagByPostId
 }
 export default postTagService;

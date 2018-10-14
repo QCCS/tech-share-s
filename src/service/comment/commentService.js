@@ -3,14 +3,25 @@ import comment from '../../models/comment';
 async function createComment(user_id, content) {
     let res = await comment.create({
         user_id,
-        comment:content
+        comment: content
     });
     return res;
 }
-async function deleteComment(id) {
+
+async function deleteCommentByRoot(id) {
     let res = await comment.destroy({
         where: {
-            id: id
+            id,
+        }
+    });
+    return res;
+}
+
+async function deleteComment(id, user_id) {
+    let res = await comment.destroy({
+        where: {
+            id,
+            user_id,
         }
     });
     // sql
@@ -18,14 +29,32 @@ async function deleteComment(id) {
     return res;
 }
 
-async function updateComment(id, name) {
-    let res = await comment.update({
-        name: name
-    },{
-        where: {
-            id: id
+async function updateCommentByRoot(id, content) {
+    let res = await comment.update(
+        {
+            comment: content
+        },
+        {
+            where: {
+                id,
+            }
         }
-    });
+    );
+    return res;
+}
+
+async function updateComment(id, user_id, content) {
+    let res = await comment.update(
+        {
+            comment: content
+        },
+        {
+            where: {
+                id,
+                user_id
+            }
+        }
+    );
     return res;
 }
 
@@ -42,7 +71,9 @@ async function getAllComment() {
 let commentService = {
     createComment,
     deleteComment,
+    deleteCommentByRoot,
     updateComment,
+    updateCommentByRoot,
     getComment,
     getAllComment
 }

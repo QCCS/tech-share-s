@@ -8,9 +8,10 @@ async function createPostLike(user_id, post_id) {
     return res;
 }
 
-async function deletePostLike(id) {
+async function deletePostLike(user_id,id) {
     let res = await postLike.destroy({
         where: {
+            user_id,
             id: id
         }
     });
@@ -29,11 +30,19 @@ async function getAllPostLike() {
     let res = await postLike.findAll();
     return res;
 }
-
+async function getLikeByPostId(post_id) {
+    let res = await postLike.findAll({
+        where: {
+            post_id
+        }
+    });
+    return res;
+}
 let postLikeService = {
     createPostLike,
     deletePostLike,
     getPostLike,
-    getAllPostLike
+    getAllPostLike,
+    getLikeByPostId
 }
 export default postLikeService;
