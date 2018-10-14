@@ -16,6 +16,9 @@ import getFeeInfo from '../service/fee/GetFeeService';
 //权限curd
 import permissionService from '../service/permission/permissionService'
 
+// 评论 curd
+import commentService from '../service/comment/commentService'
+
 // 路由配置
 const router = new Router(
     {
@@ -109,6 +112,14 @@ router
         ctx.body = permissions;
         console.log(permissions)
     })
+    .post('/comment', async (ctx) => {
+        let data = ctx.request.body;
+        console.log(data);
+        let comment = await commentService.createComment(data.id,data.name);
+        ctx.body = comment;
+        console.log(comment);
+    })
+
 
 
 export default {

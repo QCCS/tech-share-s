@@ -1113,3 +1113,7 @@ mysql> desc post_like;
 对这几个表的 curd
 
 git checkout -b share20
+
+cd src/service
+mkdir image comment post tag post_tag post_comment post_like post_read
+依次创建 service 文件

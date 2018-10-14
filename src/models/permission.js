@@ -1,6 +1,6 @@
 import db from '../utils/sequelizeQuery';
 const {sequelize, Sequelize} = db;
-let role = sequelize.define('permission',
+let permission = sequelize.define('permission',
     {
         id: {
             type: Sequelize.INTEGER,
@@ -18,4 +18,4 @@ let role = sequelize.define('permission',
         freezeTableName: true // Model 对应的表名将与model名相同
     }
 );
-export default role;
+export default permission;
