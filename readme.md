@@ -925,3 +925,191 @@ http://localhost:9113/images/img/2018/09/29/e95952c8-843f-42be-bc3e-ce0b5f56cca8
 #后续
 添加几个表，成为博客系统
 git checkout -b share19
+
+sequelize会需要几个文件夹，并且文件夹在运行目录的跟目录
+所以，
+cd src
+../node_modules/.bin/sequelize init
+这样就会自动生成
+config/config.json
+models
+migrations
+然后创建 migration 文件
+运行命令
+../node_modules/.bin/sequelize migration:generate --name model_name
+
+比如创建 image 表，先创建 model image
+然后运行命令
+../node_modules/.bin/sequelize migration:generate --name image
+在 migrations 目录下，生成 image 的迁移文件
+
+在迁移文件中根据model中定义的字段，添加逻辑
+运行
+../node_modules/.bin/sequelize db:migrate
+即可生成对应的表
+
+如果修改模型-再次生成migration
+../node_modules/.bin/sequelize migration:generate --name image
+../node_modules/.bin/sequelize db:migrate
+或者直接修改迁移文件
+../node_modules/.bin/sequelize db:migrate:undo
+../node_modules/.bin/sequelize db:migrate
+
+创建以下表
+tables
+```
+image
+comment
+tag
+post
+post_tag
+post_comment
+post_like
+post_read
+```
+--
+依次运行，生成迁移文件
+```
+../node_modules/.bin/sequelize migration:generate --name image
+../node_modules/.bin/sequelize migration:generate --name comment
+../node_modules/.bin/sequelize migration:generate --name tag
+../node_modules/.bin/sequelize migration:generate --name post
+```
+... ...
+
+修改对应迁移文件
+
+修改完成之后
+../node_modules/.bin/sequelize db:migrate
+
+可以查看数据库
+就生成了表
+mysql> show tables;
++--------------------------+
+| Tables_in_tech_share_dev |
++--------------------------+
+| SequelizeMeta            |
+| comment                  |
+| fee                      |
+| image                    |
+| permission               |
+| post                     |
+| post_comment             |
+| post_like                |
+| post_read                |
+| post_tag                 |
+| role                     |
+| role_permission          |
+| tag                      |
+| user                     |
+| user_role                |
++--------------------------+
+15 rows in set (0.00 sec)
+
+mysql> desc comment;
++-----------+----------+------+-----+---------+----------------+
+| Field     | Type     | Null | Key | Default | Extra          |
++-----------+----------+------+-----+---------+----------------+
+| id        | int(11)  | NO   | PRI | NULL    | auto_increment |
+| user_id   | int(11)  | NO   |     | NULL    |                |
+| comment   | text     | NO   |     | NULL    |                |
+| createdAt | datetime | NO   |     | NULL    |                |
+| updatedAt | datetime | NO   |     | NULL    |                |
++-----------+----------+------+-----+---------+----------------+
+5 rows in set (0.00 sec)
+
+mysql> desc image;
++-----------+--------------+------+-----+---------+----------------+
+| Field     | Type         | Null | Key | Default | Extra          |
++-----------+--------------+------+-----+---------+----------------+
+| id        | int(11)      | NO   | PRI | NULL    | auto_increment |
+| user_id   | int(11)      | NO   |     | NULL    |                |
+| path      | varchar(255) | NO   |     | NULL    |                |
+| name      | varchar(255) | YES  |     | NULL    |                |
+| size      | bigint(20)   | YES  |     | NULL    |                |
+| createdAt | datetime     | NO   |     | NULL    |                |
+| updatedAt | datetime     | NO   |     | NULL    |                |
++-----------+--------------+------+-----+---------+----------------+
+7 rows in set (0.00 sec)
+
+mysql> desc post;
++-----------+--------------+------+-----+---------+----------------+
+| Field     | Type         | Null | Key | Default | Extra          |
++-----------+--------------+------+-----+---------+----------------+
+| id        | int(11)      | NO   | PRI | NULL    | auto_increment |
+| user_id   | int(11)      | NO   |     | NULL    |                |
+| title     | varchar(255) | NO   |     | NULL    |                |
+| desc      | varchar(255) | NO   |     | NULL    |                |
+| content   | text         | NO   |     | NULL    |                |
+| is_delete | tinyint(4)   | NO   |     | NULL    |                |
+| is_draft  | tinyint(4)   | NO   |     | NULL    |                |
+| createdAt | datetime     | NO   |     | NULL    |                |
+| updatedAt | datetime     | NO   |     | NULL    |                |
++-----------+--------------+------+-----+---------+----------------+
+9 rows in set (0.01 sec)
+
+mysql> desc tag;
++-----------+--------------+------+-----+---------+----------------+
+| Field     | Type         | Null | Key | Default | Extra          |
++-----------+--------------+------+-----+---------+----------------+
+| id        | int(11)      | NO   | PRI | NULL    | auto_increment |
+| user_id   | int(11)      | NO   |     | NULL    |                |
+| tag       | varchar(255) | NO   |     | NULL    |                |
+| createdAt | datetime     | NO   |     | NULL    |                |
+| updatedAt | datetime     | NO   |     | NULL    |                |
++-----------+--------------+------+-----+---------+----------------+
+5 rows in set (0.00 sec)
+mysql> desc post_comment;
++------------+----------+------+-----+---------+----------------+
+| Field      | Type     | Null | Key | Default | Extra          |
++------------+----------+------+-----+---------+----------------+
+| id         | int(11)  | NO   | PRI | NULL    | auto_increment |
+| post_id    | int(11)  | NO   |     | NULL    |                |
+| comment_id | int(11)  | NO   |     | NULL    |                |
+| createdAt  | datetime | NO   |     | NULL    |                |
+| updatedAt  | datetime | NO   |     | NULL    |                |
++------------+----------+------+-----+---------+----------------+
+5 rows in set (0.01 sec)
+
+mysql> desc post_like;
++-----------+----------+------+-----+---------+----------------+
+| Field     | Type     | Null | Key | Default | Extra          |
++-----------+----------+------+-----+---------+----------------+
+| id        | int(11)  | NO   | PRI | NULL    | auto_increment |
+| post_id   | int(11)  | NO   |     | NULL    |                |
+| user_id   | int(11)  | NO   |     | NULL    |                |
+| createdAt | datetime | NO   |     | NULL    |                |
+| updatedAt | datetime | NO   |     | NULL    |                |
++-----------+----------+------+-----+---------+----------------+
+5 rows in set (0.01 sec)
+
+mysql> desc post_read;
++-----------+----------+------+-----+---------+----------------+
+| Field     | Type     | Null | Key | Default | Extra          |
++-----------+----------+------+-----+---------+----------------+
+| id        | int(11)  | NO   | PRI | NULL    | auto_increment |
+| post_id   | int(11)  | NO   |     | NULL    |                |
+| user_id   | int(11)  | NO   |     | NULL    |                |
+| createdAt | datetime | NO   |     | NULL    |                |
+| updatedAt | datetime | NO   |     | NULL    |                |
++-----------+----------+------+-----+---------+----------------+
+5 rows in set (0.01 sec)
+
+mysql> desc post_like;
++-----------+----------+------+-----+---------+----------------+
+| Field     | Type     | Null | Key | Default | Extra          |
++-----------+----------+------+-----+---------+----------------+
+| id        | int(11)  | NO   | PRI | NULL    | auto_increment |
+| post_id   | int(11)  | NO   |     | NULL    |                |
+| user_id   | int(11)  | NO   |     | NULL    |                |
+| createdAt | datetime | NO   |     | NULL    |                |
+| updatedAt | datetime | NO   |     | NULL    |                |
++-----------+----------+------+-----+---------+----------------+
+5 rows in set (0.01 sec)
+
+
+下一步可以在service目录下创建
+几个表实体对应查询的 service
+对这几个表的 curd
+
+git checkout -b share20
