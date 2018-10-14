@@ -876,4 +876,48 @@ server {
 http://share.json119.com/api/login?mobile=15921552946&password=mac123
 ```
 添加上传文件中间件
+```
 git checkout -b share18
+```
+---
+安装
+```
+npm i koa2-file-upload
+```
+使用
+```
+let options = {
+    "url": '/api/upload',
+    "provider": "local",//存储位置类型
+    // "mimetypes": ['image/png','image/bmp'],
+    // 如果没有配置,将不进行类型检查 http://www.freeformatter.com/mime-types-list.html
+    "folder": "publicImg/images",//上传文件夹,后面 images 与 urlPath images 保持一致，这样可以直接把返回的 url 保持，
+    "storeDir": 'img',//存储文件夹
+    "urlPath": "images"//获取的时候url，可以存储，设置上传文件夹为静态路由，之后直接访问
+}
+app.use(uploader(options))
+
+```
+测试
+```
+post api/upload
+headers
+enctype=multipart/form-data
+body
+{
+file:""
+}
+```
+上传成功后会返回一个地址
+```
+/images/img/2018/09/29/e95952c8-843f-42be-bc3e-ce0b5f56cca8.png
+```
+//上传的图片的存储目录，设置为静态目录，可以直接查看文件
+```
+//设置静态目录
+let staticImgPath = process.cwd()+"/publicImg";
+app.use(staticServer(staticImgPath));
+//查看
+http://localhost:9113/images/img/2018/09/29/e95952c8-843f-42be-bc3e-ce0b5f56cca8.png
+
+```
