@@ -13,7 +13,7 @@ import config from './config/index';
 import error from './middleware/error';
 import views from 'koa-views';
 import router from './route/router';
-
+import postModuleRouter from './route/postModuleRouter';
 const routerForAllow = new Router();
 const app = new Koa();
 //使用babel编译之后，输出的是跟路径，/
@@ -81,6 +81,7 @@ app.on('error', function (err, ctx) {
 // 使用路由中间件
 app.use(indexController)
     .use(router.router.routes())
+    .use(postModuleRouter.router.routes())
     .use(routerForAllow.allowedMethods());
 
 //服务端口

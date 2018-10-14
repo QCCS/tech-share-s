@@ -1111,9 +1111,33 @@ mysql> desc post_like;
 下一步可以在service目录下创建
 几个表实体对应查询的 service
 对这几个表的 curd
-
+```
 git checkout -b share20
 
 cd src/service
-mkdir image comment post tag post_tag post_comment post_like post_read
+mkdir image comment post tag postTag postComment postLike postRead
+```
 依次创建 service 文件
+
+依次创建 controller 文件
+```
+image comment post tag postTag postComment postLike postRead
+```
+然后把博客系统模板分离出来，单独成为一个模块
+创建路由文件
+postModuleRouter.js
+在入口文件引入
+```
+import postModuleRouter from './route/postModuleRouter';
+app.use(postModuleRouter.router.routes());
+```
+分别定义博客系统各实体的路由
+```
+router
+    .post('/comment', commentController.createComment)
+    .delete('/comment/:id', commentController.deleteComment)
+    .put('/comment', commentController.updateComment)
+    .get('/comment/:id', commentController.getComment)
+    .get('/comment', commentController.getAllComment)
+```
+注意：模型与迁移文件是下划线命名，service 与 controller 是驼峰命名
