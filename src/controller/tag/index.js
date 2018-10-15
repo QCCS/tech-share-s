@@ -5,11 +5,7 @@ import postTagService from '../../service/postTag/postTagService';
 async function createTag(ctx) {
     let data = ctx.request.body;
     let user = ctx.user;
-    let tag = await tagService.createTag(user.id, data.name);
-    if (data.post_id) {
-        let postTag = await postTagService.createPostTag(data.post_id, tag.id);
-        console.log(postTag)
-    }
+    let tag = await tagService.createTag(user.id, data.name, data.post_id);
     ctx.body = tag;
     console.log(tag);
 }

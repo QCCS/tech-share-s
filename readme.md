@@ -1173,9 +1173,12 @@ curd ok
 博客点赞
 博客阅读量
 
+添加事务
+创建评论，关联博客
+创建标签，关联博客
+
 todo
-事务
-redis
-用户多次点赞
+redis token refresh_token存储
+用户点赞
 
 

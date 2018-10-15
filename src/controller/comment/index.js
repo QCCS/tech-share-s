@@ -1,19 +1,15 @@
 // 评论 curd
 import commentService from '../../service/comment/commentService';
 import postCommentService from '../../service/postComment/postCommentService';
+import db from '../../utils/sequelizeQuery';
 
 async function createComment(ctx) {
     let data = ctx.request.body;
     let user = ctx.user;
     //事务
     //需要插入 post_comment
-    let comment = await commentService.createComment(user.id, data.comment);
-    if (data.post_id) {
-        let postComment = await postCommentService.createPostComment(data.post_id, comment.id);
-        console.log(postComment)
-    }
+    let comment = await commentService.createComment(user.id, data.comment, data.post_id);
     ctx.body = comment;
-    console.log(comment);
 }
 
 async function deleteComment(ctx) {
