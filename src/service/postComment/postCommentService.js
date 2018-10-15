@@ -29,12 +29,16 @@ async function getAllPostComment() {
     return res;
 }
 async function getCommentByPostId(post_id) {
-    let res = await postComment.findAll({
-        where: {
-            post_id
-        }
-    });
+    let res = await db.sequelize.query('select p.id,c.comment from post p,comment c,post_comment pc ' +
+        'where p.id = ? and pc.post_id=p.id and pc.comment_id=c.id',
+        { replacements: [post_id], type: db.sequelize.QueryTypes.SELECT });
     return res;
+    // let res = await postComment.findAll({
+    //     where: {
+    //         post_id
+    //     }
+    // });
+    // return res;
 }
 
 let postCommentService = {
