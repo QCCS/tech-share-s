@@ -1221,3 +1221,33 @@ test
 添加文档
 docs
 git checkout -b share21
+
+model 关联
+```
+git checkout -b share22
+// post.belongsToMany(tag, { as: 'tag', through: post_tag, foreignKey: 'post_id' });
+// tag.belongsToMany(post, { as: 'post', through: post_tag, foreignKey: 'tag_id' });
+```
+修改迁移文件
+```
+'use strict';
+module.exports = {
+    up: (queryInterface, Sequelize) => {
+        //添加 post_id 外键
+        return queryInterface.addConstraint('post_tag', ['post_id'], {
+            type: 'FOREIGN KEY',
+            name: 'post_id_constraint_name',
+            references: { //Required field
+                table: 'post',
+                field: 'id'
+            },
+            onDelete: 'cascade',
+            onUpdate: 'cascade'
+        });
+    },
+
+    down: (queryInterface, Sequelize) => {
+        return queryInterface.removeConstraint('post_tag', 'post_id_constraint_name');
+    }
+};
+```
