@@ -1343,5 +1343,66 @@ git checkout -b share21
 ```
 http://localhost:63342/tech-share-s/docs
 
+# model 表关联
+```
+git checkout -b share22
+```
+修改模型
+```
+post.belongsToMany(tag, { as: 'tag', through: post_tag, foreignKey: 'post_id' });
+tag.belongsToMany(post, { as: 'post', through: post_tag, foreignKey: 'tag_id' });
+```
+修改迁移文件
+```
+'use strict';
+module.exports = {
+    up: (queryInterface, Sequelize) => {
+        //添加 post_id 外键
+        return queryInterface.addConstraint('post_tag', ['post_id'], {
+            type: 'FOREIGN KEY',
+            name: 'post_id_constraint_name',
+            references: { //Required field
+                table: 'post',
+                field: 'id'
+            },
+            onDelete: 'cascade',
+            onUpdate: 'cascade'
+        });
+    },
+
+    down: (queryInterface, Sequelize) => {
+        return queryInterface.removeConstraint('post_tag', 'post_id_constraint_name');
+    }
+};
+```
+运行命令
+```
+cd src
+../node_modules/.bin/sequelize db:migrate
+```
+
+导出数据库，可以查看已经创建了外键
+
+```
+mysqldump -uroot -pmac123 -B tech_share_dev > /Users/zhouli/Desktop/tech_share_dev_181016.sql
+```
+```
+DROP TABLE IF EXISTS `post_tag`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `post_tag` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `post_id` int(11) NOT NULL,
+  `tag_id` int(11) NOT NULL,
+  `createdAt` datetime NOT NULL,
+  `updatedAt` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `post_id_constraint_name` (`post_id`),
+  KEY `tag_id_constraint_name` (`tag_id`),
+  CONSTRAINT `post_id_constraint_name` FOREIGN KEY (`post_id`) REFERENCES `post` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `tag_id_constraint_name` FOREIGN KEY (`tag_id`) REFERENCES `tag` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+```
+
 ## 下次继续前后端自动化测试，请等待 ):
  

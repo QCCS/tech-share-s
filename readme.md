@@ -1201,9 +1201,7 @@ blog_index.ejs
 ejs语法参考
 http://ejs.co
 
-todo
-redis token refresh_token存储
-用户点赞
+
 logs
 //日志处理
 ```
@@ -1215,8 +1213,7 @@ app.use(logger((str, args) => {
     fs.appendFile('logs/' + logFileName, str);
 }));
 ```
-settings
-test
+
 
 添加文档
 docs
@@ -1251,3 +1248,37 @@ module.exports = {
     }
 };
 ```
+运行命令
+```
+cd src
+../node_modules/.bin/sequelize db:migrate
+```
+
+导出数据库，可以查看已经创建了外键
+
+```
+mysqldump -uroot -pmac123 -B tech_share_dev > /Users/zhouli/Desktop/tech_share_dev_181016.sql
+```
+```
+DROP TABLE IF EXISTS `post_tag`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `post_tag` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `post_id` int(11) NOT NULL,
+  `tag_id` int(11) NOT NULL,
+  `createdAt` datetime NOT NULL,
+  `updatedAt` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `post_id_constraint_name` (`post_id`),
+  KEY `tag_id_constraint_name` (`tag_id`),
+  CONSTRAINT `post_id_constraint_name` FOREIGN KEY (`post_id`) REFERENCES `post` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `tag_id_constraint_name` FOREIGN KEY (`tag_id`) REFERENCES `tag` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+```
+
+todo
+redis token refresh_token存储
+用户点赞
+settings
+test
