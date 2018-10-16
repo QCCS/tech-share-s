@@ -1,7 +1,8 @@
+import fs from 'fs';
 import Koa from 'koa';
 import Router from 'koa-router';
 import logger from 'koa-logger';
-import staticServer from'koa-static';
+import staticServer from 'koa-static';
 import koaJwt from 'koa-jwt';
 import bodyParser from 'koa-bodyparser';
 import koaSwagger from 'koa2-swagger-ui';
@@ -14,25 +15,28 @@ import error from './middleware/error';
 import views from 'koa-views';
 import router from './route/router';
 import postModuleRouter from './route/postModuleRouter';
+
 const routerForAllow = new Router();
 const app = new Koa();
 //使用babel编译之后，输出的是跟路径，/
 console.log(__dirname);
 //默认的静态文件
-let staticPath = process.cwd()+"/dist/static";
+let staticPath = process.cwd() + "/dist/static";
 app.use(staticServer(staticPath));
 //上传的图片
-let staticImgPath = process.cwd()+"/publicImg";
+let staticImgPath = process.cwd() + "/publicImg";
 app.use(staticServer(staticImgPath));
 //排除某些接口,不校验
-app.use(koaJwt({secret: config.secret.sign}).unless({path: [
-    /^\/api\/login/,
-    /^\/img/,//静态图片
-    /^\/api\/upload/,//上传文件
-    /^\/doc/,//文档忽略
-    /^\/swagger/,
-    /^\/api\/register/
-]}));
+app.use(koaJwt({secret: config.secret.sign}).unless({
+    path: [
+        /^\/api\/login/,
+        /^\/img/,//静态图片
+        /^\/api\/upload/,//上传文件
+        /^\/doc/,//文档忽略
+        /^\/swagger/,
+        /^\/api\/register/
+    ]
+}));
 
 let options = {
     "url": '/api/upload',
@@ -69,7 +73,13 @@ app.use(views(process.cwd() + '/dist/views', {
 }))
 
 //日志处理
-app.use(logger());
+app.use(logger((str, args) => {
+    console.log(str)
+    let t = new Date();
+    let _t = t.getFullYear() + "-" + (t.getMonth() + 1) + "-" + t.getDate() + "-" + t.getHours();
+    let logFileName = "log" + _t + '.txt';
+    fs.appendFile('logs/' + logFileName, str);
+}));
 //请求体处理
 app.use(bodyParser());
 //统一错误处理
