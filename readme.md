@@ -1177,6 +1177,30 @@ curd ok
 创建评论，关联博客
 创建标签，关联博客
 
+##后端渲染博客前台页面
+添加博客列表
+添加博客详情页面
+添加路由
+```
+.get('/blog', async (ctx) => {})
+.get('/blog/:id', async (ctx) => {})
+```
+博客前台页面放弃认证
+```
+app.use(koaJwt({secret: config.secret.sign}).unless({
+    path: [
+        /^\/api\/blog/,
+    ]
+}));
+```
+在views目录下添加ejs模板页面
+```
+blog.ejs
+blog_index.ejs
+```
+ejs语法参考
+http://ejs.co
+
 todo
 redis token refresh_token存储
 用户点赞

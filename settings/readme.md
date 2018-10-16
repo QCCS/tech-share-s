@@ -1,1 +1,1 @@
-settings
+APP settings

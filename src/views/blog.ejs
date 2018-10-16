@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title><%= title %></title>
+    <style>
+        ul,li{
+            list-style: none;
+            padding: 0px;
+        }
+        .comment-wrap{
+        }
+        .comment{
+            background: #eee;
+            margin-bottom: 2px;
+            padding: 6px;
+        }
+        .tag-wrap{
+
+        }
+        .tag{
+            background: green;
+            padding: 6px 12px 6px 12px;
+            color: white;
+            border-radius: 4px;
+            float: left;
+            margin-right: 6px;
+        }
+        .clear{
+            clear: both;
+        }
+    </style>
+</head>
+<body>
+<h6>
+    作者
+    <%= user %>
+</h6>
+
+
+<h3>
+    标题
+    <%= post.title %>
+</h3>
+
+<h5>
+    描述
+    <%= post.desc %>
+</h5>
+
+<p>
+    内容
+    <%- post.content %>
+</p>
+评论
+<ul class="comment-wrap">
+    <% comments.forEach(function(item){%>
+    <li class="comment"><%=item.comment %></li>
+    <% }) %>
+</ul>
+
+标签
+<ul class="tag-wrap">
+    <% tags.forEach(function(item){%>
+    <li class="tag"><%=item.tag %></li>
+    <% }) %>
+    <div class="clear"></div>
+</ul>
+
+
+<p>
+    收藏
+    <%= likes.length %>
+</p>
+<p>
+    阅读量
+    <%= reads.length %>
+</p>
+</body>
+</html>

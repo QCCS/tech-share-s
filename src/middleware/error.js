@@ -23,8 +23,8 @@ export default function error() {
                 } catch (err) {
                     console.log('不合法token: ', err)
                 }
-                await next()
             }
+            await next()
         } catch (err) {
             if (err.status === 401) {
                 ctx.body = {
@@ -34,7 +34,7 @@ export default function error() {
             } else {
                 err.status = 404;
                 ctx.body = '404';
-                console.log('错误有点离谱，无法识别错误：', err)
+                console.log('错误有点离谱，无法识别错误：', err);
             }
         }
     }

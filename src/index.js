@@ -29,6 +29,7 @@ app.use(staticServer(staticImgPath));
 //排除某些接口,不校验
 app.use(koaJwt({secret: config.secret.sign}).unless({
     path: [
+        /^\/api\/blog/,
         /^\/api\/login/,
         /^\/img/,//静态图片
         /^\/api\/upload/,//上传文件
