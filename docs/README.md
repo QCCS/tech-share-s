@@ -1,48 +1,57 @@
-在github上创建一个仓库，clone到本地
-创建readme.md
-可以先安装nvm
-然后切换安装9.0版本
-因为我想用一下比较高级的语法
+# 从0到1搭建后端脚手架
+
+环境依赖 Node v9.0.0
+
+关键字：Node,ES6,koa2,mysql,sequlize,orm,jwt,swagger
+
+此文档只是对搭建脚手架关键步骤进行说明，
+详细步骤的代码，可以 clone 本项目，从不同的分支依次看。
+从 master 到 share1 ---- share18 共19个分支，依次添加代码的。
+之后为演示功能，share19---share20 为博客系统设计与开发。
+建议是把代码 clone 到本地，根据此文档，依次安装各模块，运行代码，查看分支代码。
+如有错误，可以联系我 wechat: qianchaochushui ，或者自行纠正。
+代码地址：
+```
+https://github.com/QCCS/tech-share-s.git
+```
+
+# 环境切换
 ```
 nvm list
-
 nvm use 9.0
 ```
 
-------
-
-当前分支master
+# 初始化项目
+当前分支 master
 然后
 ```
 npm init
 ```
 关键字可以输入：
 ```
-    "node",
-    "koa2",
-    "mysql",
-    "orm",
-    "jwt",
-    "restful",
-    "pm2",
-    "nginx",
-    "swpper"
+"node",
+"koa2",
+"mysql",
+"orm",
+"jwt",
+"restful",
+"pm2",
+"nginx",
+"swagger"
 ```
 生成package文件
 
-----
-
-创建入口文件，测试第一个node server
+创建入口文件，测试第一个 node server
 ```
 index.js
 ```
+# ES6 环境配置
+然后配置一下简单的 ES6 开发环境，
+与前端环境一样还是需要 babel，node 对 ES6 的语法并不是完成支持的。
 
-然后配置一下简单的es6开发环境
-与前端环境一样还是需要babel，node对es6的语法并不是完成支持的
-
-前端环境node8
-安装过babel，但是这边用node9
-还是需要再次安装
+前端环境 node8，
+安装过 babel，但是这边用 node9，
+还是需要再次安装。
 
 ```
 //编译工具
@@ -52,7 +61,7 @@ npm install babel-preset-es2015 --save-dev
 npm install --save-dev babel-preset-stage-0
 
 ```
-配置文件中可以加入stage-0，来支持es7的语法
+配置文件中可以加入 stage-0，来支持 ES6 的语法:
 ```
 {
   "presets": ["es2015", "stage-0"],
@@ -60,120 +69,116 @@ npm install --save-dev babel-preset-stage-0
 }
 ```
 
-然后就可以用es6语法开发了
-但是一样就是说写一下es6，编译一下，然后跑一次
-下面搞成自动化的，能写完，编译，自己重启
-
-
-
-----
-
+然后就可以用 ES6 语法开发了,
+但是一样就是说写一下 ES6 ，编译一下，然后跑一次，
+下面搞成自动化的，能写完，编译，自己重启。
+# 后端自动化
+## supervisor
 ```
 git checkout -b share1
 ```
-
-安装
+安装 supervisor
 ```
 npm i -g supervisor
 ```
-启动
-由于 supervisor 与当前node环境一样，不能支持es6,
-所以，需要运行编译之后的文件
+由于 supervisor 与当前node环境一样，不能支持 ES6,
+所以，需要运行编译之后的文件。
 ```
 supervisor dist/index.js
 ```
-index.js改变，还需要编译
+index.js 改变，还需要编译，命令：
 ```
 npm run build
 ```
-之后，就可以自动重启
-
+运行之后，就可以自动重启。
+## webpack
 再安装一下模块打包器
-不然与前端一样，import直接编译为require，找不到模块
+不然与前端一样，import 直接编译为 require，找不到模块
 ```
 npm install --save-dev webpack
-方便直接输入输入 webpack 命令
+//方便直接输入 webpack 命令
 npm install --save-dev webpack-cli
 ```
-两个版本有依赖,注意查看
-我们这边安装的webpack 4.x
+两个版本有依赖,注意查看,
+我们这边安装的webpack 4.x;
 
 
-另外我没有全局安装
-运行webpack，由于环境变量里面没有webpack会找不到命令
+另外我没有全局安装，
+运行webpack，由于环境变量里面没有webpack会找不到命令,
 
-可以这样,找当前项目目录
+可以这样,找当前项目目录:
 ```
 node_modules/.bin/webpack
 ```
 
-注意weback配置文件添加
+注意weback配置文件添加,
 不然编译目标文件是浏览器运行环境的，
 
 ```
     target: 'node',
 ```
+## chokidar
 
-到这里，还差一步，就是watch整个src目录
-只要有文件改变，就自动触发webpack打包
-先在npm 上去找 搜索，watch file
-如果找不大，自己写一个
+到这里，还差一步，就是 watch 整个 src 目录,
+只要有文件改变，就自动触发 webpack 打包,
+先在npm 上去找 搜索，"watch file",
+如果找不大，自己写一个,
 
-
-npm 很多
- fb-watchman很强大，还可以找出改变的内容
- 我们这边只需要发现改变就行
- watch
- chokidar
- 用一个简单的，下载量多的 chokidar
+npm网站上很多：
+ fb-watchman：很强大，还可以找出改变的内容；
+ 我们这边只需要发现改变就行，
+ watch，
+ chokidar，
+ 用一个简单的，下载量多的 chokidar：
 
 ```
 npm i --save chokidar
 ```
-然后编写一个watchChange.js
-作用就是，发现src目录下改变，就重新打包，
-打包之后，dist/indexjs就会变化，一旦变好，node服务自动重启
+然后编写一个 watchChange.js
+作用就是，发现 src 目录下改变，就重新打包，
+打包之后，dist/indexjs 就会变化，一旦变好，node 服务自动重启，
 
-这样，我们开发过程就可以实时看见自己的api变化
-
-supervisor运行node服务 -->
-src-chanage -->
+这样，我们开发过程就可以实时看见自己的 api 变化。
+自动流程这样：
+supervisor 运行 node 服务 -->
+ src - chanage -->
 编译 -->
 node server重启
 -->
-查看效果
-
--------
-
-一个简单的node 自动化开发环境就好了
-如果要链接数据库，可以安装node对应的模块
-下一个分支，简单用原生node开发几个简单的api
+查看效果。
+到这里，一个简单的 node 自动化开发环境就好了。
+# 连接数据库
+如果要连接数据库，可以安装 node 对应的模块
+下一个分支，简单用原生 node 开发几个简单的 api
 ```
 git checkout -b share2
 ```
 两个简单get请求
+## 接口1-json
 1.test/json
+## 接口2-html
 2.test/index.html
 
-这两个都对接口简单响应，没有操作数据库
-下面写一个接口，从数据库查询数据
+这两个都对接口简单响应，没有操作数据库，
+下面写一个接口，从数据库查询数据，
+## 接口3-db
 3.test/db
 
-连接数据库是一个复杂的过程，直接先安装数据库连接模块
+连接数据库是一个复杂的过程，直接先安装数据库连接模块.
 ```
 npm i --save mysql
 ```
 mysql 模块有额为的依赖
 打包配置文件需要加上，不要外部依赖加入进来
-不然import mysql 的时候把mysql模块导入进来，到时候运行就报错了；
-还是保留在node_modules依赖中，运行时自动找
+不然 import mysql 的时候把 mysql 模块导入进来，到时候运行就报错了；
+还是保留在 node_modules 依赖中，运行时自动找.
 
-externals支持好几张模块加载方式，比如全局加载，与commonjs规范，
-具体可以查询文档
-我们这里用commonjs，commonjs系统规范就是node模块系统规范
-还有CMD,AMD,虽然这些都是民间定义的，但是已经运用广，在es模块系统推广中
+externals 支持好几张模块加载方式，比如全局加载，与 commonjs 规范，
+具体可以查询文档,
+我们这里用 commonjs，commonjs 系统规范就是 node 模块系统规范,
+还有CMD,AMD,虽然这些都是民间定义的，但是已经运用广，在 ES 模块系统推广中
 还会使用一段时间，这里不多讨论；
-
+修改webpack:
 ```
 externals:_externals();
 ... ...
@@ -189,7 +194,7 @@ function _externals() {
 }
 
 ```
-然后这边只是演示一个简单api，简单连接方式
+然后这边只是演示一个简单 api，简单连接方式
 ```
 let db = mysql.createConnection({host: '127.0.0.1', user: 'root', password: 'mac123', database: 'information_schema'});
     db.query("SELECT * FROM `USER_PRIVILEGES`;", (err, data)=>{
@@ -203,15 +208,18 @@ let db = mysql.createConnection({host: '127.0.0.1', user: 'root', password: 'mac
 ```
 后面我们借助orm框架，演示一下比较规范，复杂的东西
 
--------
-前面开发东西实在麻烦
+以上原生 node 开发东西实在麻烦，
 之后开始用框架koa2
 
+# Koa2
+## koa2
 ```
 git checkout -b share3
 ```
 开发时不编译打包，最后发布的时候一次性打包。
+
 1.由于调试问题。我需要用编辑器打断点，打包好之后，我不方便。
+
 2.后端打包相比前端打包需求不是那么明显。前端打包主要一个原因
 就是压缩代码，混淆代码。减少网络传输时间，不要别人看源码。
 而服务端不存在。
@@ -221,7 +229,7 @@ git checkout -b share3
 //我这边看最新版本2.5.3，但是我习惯安装前一个稳定版本
 npm i --save koa@2.5.2
 ```
-安装之后稍微改造index.js，更加简洁
+安装之后稍微改造 index.js，更加简洁
 ```
 import Koa from 'koa';
 const app = new Koa();
@@ -232,41 +240,39 @@ app.use(ctx => {
 
 app.listen(8080);
 ```
-输入地址：网页显示Hello Koa
-服务测试ok
-koa依赖于中间件编程
+输入地址：网页显示 Hello Koa,
+服务测试ok,
+Koa依赖于中间件编程。
 
-----
-
+## koa-router
 安装路由中间价koa-router
 ```
 npm i --save koa-router@7.4.0
 ```
-安装路由之后，我把路由单独放一个模块里面
-做一个接口
+安装路由之后，我把路由单独放一个模块里面。
+做一个接口：
 api/koa-test
-输出
+输出：
 koa-router api
 
---------
-
+## koa-logger
 开发的时候，然后每一个请求，我想看见服务器这边收到的请求输出。
-再次添加开发中间件logger,这个版本倒不是那么重要
+再次添加开发中间件 logger,这个版本倒不是那么重要。
 
 ```
 git checkout -b share4
 npm i --save-dev koa-logger
 ```
 app.use(logger());
-这样就可以看见请求与相应了
+这样就可以看见请求与相应了。
+
+## 后端debug
+到这个分支，插入一个点，debug。
+debug 的话，这边不单独展开讲，
+可以把 webpack 开启调试模式，然后配置编辑器调试。
 
 
-到这个分支，插入一个点，debug
-debug的话，这边不单独展开讲，
-可以把webpack开启调试模式，然后配置编辑器调试
-
-
------
+## koa-static
 
 静态资源服务与模板引擎
 ```
@@ -288,9 +294,9 @@ new copyWebpackPlugin([{
 git checkout -b share6
 npm install --save koa-views
 ```
-使用之前还是需要到官网或npmjs看看使用方式
-支持各种模板引擎（需要安装）
-比如必须在路由配置前配置目标路径
+使用之前还是需要到官网或npmjs看看使用方式，
+支持各种模板引擎（需要安装），
+比如必须在路由配置前配置目标路径，
 ... ...
 
 安装之后，简单使用
@@ -313,8 +319,7 @@ router
         });
     });
 ```
------
-
+## ejs
 安装一个模板引擎
 ```
 npm i --save ejs
@@ -333,7 +338,7 @@ app.use(views(process.cwd() + '/dist/views', {
     });
 ```   
 
-写一个模板文件ejs结尾，不然模板引擎不认识
+写一个模板文件 ejs 结尾，不然模板引擎不认识
 ```
     <!DOCTYPE html>
     <html lang="en">
@@ -349,40 +354,37 @@ app.use(views(process.cwd() + '/dist/views', {
 ```
 输出，两个变量
 
-----
-
 也可以让后缀名设置 html
 html 结尾使用 ejs 模板引擎
+```
 app.use(views(process.cwd() + '/dist/views', {
     map: {
       html: 'ejs'
     }
 }))
+```
 
-有了模板引擎，可以向前端一样写页面
-把变量放在js里面，渲染到页面中
+有了模板引擎，可以向前端一样写页面，
+把变量放在js里面，渲染到页面中。
 
-ssr,同构应用大家了解一下
+ssr,同构应用大家了解一下。
 
-----
+## 表设计
+下面为了讲后续内容，也方便大家理解，
+设计几个表来讲，
+基于用户角色的权限控制，简称rbac role base access control：
 
-下面为了讲后续内容，也方便大家理解
-设计几个表来讲
-基于用户角色的权限控制，简称rbac role base access control
-
-###三个基本表
-用户表
-角色表
+用户表，
+角色表，
 权限表
 
-###两个关系表
-用户角色表
+用户角色表，
 角色权限表
 ```
 git checkout -b share7
 ```
 
-sql不熟练可以使用软件
+sql 不熟练可以使用软件。
 ```
 //登录数据库
 mysql -u root -p
@@ -425,20 +427,20 @@ permission_id int(11) not null default 0
 
 
 ```
-mysql版本5.7
-记得加逗号，分号
-表名小写，下划线，单数
+mysql版本5.7。
+记得加逗号，分号，
+表名小写，下划线，单数。
 
----
+## swagger-ui
 
-在准真正写接口之前，先说api文档
-文档也有很多中间件支持，我这边继承流行的swagger-ui
+在准真正写接口之前，先说 api 文档，
+文档也有很多中间件支持，我这边继承流行的 swagger-ui：
+安装
 ```
-
 git checkout -b sahre8
 npm install koa2-swagger-ui --save
 ```
-
+使用
 ```
 const koaSwagger = require('koa2-swagger-ui');
 app.use(
@@ -451,15 +453,14 @@ app.use(
 );
 
 ```
-更多写法看文档
-我在static写一个doc.json
-参考里面写接口，定义标签，定义模型等
+更多写法看文档，
+我在 static 写一个 doc.json，
+参考里面写接口，定义标签，定义模型等。
 
-当然也可以不使用中间件，自己团队约定比较规范的写法
-然后自己写一个扫描器，自动扫描接口文件，生成json文件,然后生成前端可视化文档
+当然也可以不使用中间件，自己团队约定比较规范的写法。
+然后自己写一个扫描器，自动扫描接口文件，生成 json 文件,然后生成前端可视化文档。
 
------
-
+## 整理目录
 整理一下目录结构
 
 ```
@@ -484,10 +485,14 @@ static 静态文件
 ```
 
 1.写统一配置文件
+
 2.然后我们在把每个响应头加上一下配置，让接口方便访问；
+
 3.写一个统一数据库连接池与查询函数
 注意异步函数写法
+
 4.分别写user的dao，service，contoller,并添加对应接口，测试；
+
 ```
 写接口注意常用的几个属性
 ctx.params;路由参数 /:aa/:bb
@@ -495,36 +500,43 @@ ctx.query;查询参数 ?aa=aa
 ctx.request.body;post body get没有
 ```
 5.数据库插入数据方便测试
+插入语句
 ```
 insert into table_name (field_name) values (field_value);
-eg:
+```
+插入数据
+```
 insert into user (name,password,mobile,id)
  values 
 ('json','mac123','15921552946',1);
 
 ```
-方便测试把登录接口写成get方式，然后加路由后面，真实开发可以用post，md5加密
-后续会讲jwt授权登录
+方便测试把登录接口写成 get 方式，然后加路由后面，真实开发可以用post，md5加密，
+后续会讲 jwt 授权登录。
 
-这一节内容稍微多一点，各个文件夹，统一配置文件，数据库连接，sql，mvc等
+这一节内容稍微多一点，各个文件夹，统一配置文件，数据库连接，sql，mvc 等。
+# Sequelize
 
-下一个分支集成orm框架
+下一个分支集成 orm 框架
 ```
 git checkout -b share10
 ```
-还是可以到npm搜索
-然后查看
-sequelize蛮流行
-
+还是可以到npm搜索，
+然后查看。
+sequelize 蛮流行：
+```
 npm i sequelize --save
 npm i sequelize-cli -dev
-
+```
 
 多创建三个目录(如果不喜欢用orm的可以不用着几个文件夹)
+```
 models                       # 数据库 model
-migrations                   # 数据迁移的目录
-seeders                      # 数据填充的目录
 
+migrations                   # 数据迁移的目录
+
+seeders                      # 数据填充的目录
+```
 写模型
 ```
 role
@@ -554,7 +566,7 @@ var User = sequelize.define('user', {
 ```
     .get('/role', roleController);
 ```
-sequelize连接数据库
+sequelize 连接数据库
 ```
 var sequelize = new Sequelize('database', 'username', 'password', {
   host: 'localhost',
@@ -568,12 +580,17 @@ var sequelize = new Sequelize('database', 'username', 'password', {
 ```
 
 然后运行提示安装mysql2
+```
 Please install mysql2 package manually
+```
+安装mysql2
+```
 npm i --save mysql2
+```
 
-然后运行findone，没有数据，找不到
+然后运行 findone，没有数据，找不到
 添加一个数据
-先写service，然后controller，然后路由
+先写 service，然后 controller，然后路由
 ```
 import role from '../../models/role';
 async function createService(id,name) {
@@ -585,49 +602,61 @@ async function createService(id,name) {
 }
 export default createService;
 ```
-注意建表的时候设置utf8，不然中文插入数据有问题
-添加一个sql文件
+注意建表的时候设置 utf8，不然中文插入数据有问题
+添加一个 sql 文件
 
----
-
+# 配置文件
 生产环境与开发环境配置
 ```
 git checkout -b share11
 ```
-多添加config.prod.js,config/index
-然后修改util
+多添加 config.prod.js, config/index，
+然后修改 util
 
-----
-
+# sequelize-cli
 专门讲
+sequelize-cli这节可以直接查看 后续-博客系统，更加详细
 ```
 sequelize-cli
 git checkout -b share12
 node_modules/.bin/sequelize init
 ```
-根据文档来
-单独创建一个目录来演示，开发中可以选用
+根据文档来，
+单独创建一个目录来演示，开发中可以选用。
+```
 cd src
 cd db-migrate
 nvm use 9.0
+```
 1.初始化四个目录
+```
 ../../node_modules/.bin/sequelize init
+```
 修改一下配置文件，创建数据库
+```
 ../../node_modules/.bin/sequelize db:create
+```
 如果是生产环境
+```
 NODE_ENV=production ../../node_modules/.bin/sequelize db:create
-
+```
 2.创建一个模型
+```
 ../../node_modules/.bin/sequelize model:generate --name User --attributes firstName:string,lastName:string,email:string
+```
 可以稍微修改,模型
 
 3.根据模型创建表
+```
 ../../node_modules/.bin/sequelize db:migrate
+```
 默认生成的表为大写，可以改为小写
 
 4.表被创建，没有数据，填充数据
+```
 ../../node_modules/.bin/sequelize seed:generate --name user
 ../../node_modules/.bin/sequelize db:seed:all
+```
 生成的默认文件没有数据，要稍微修改代码
 然后就可以进行开发
 
@@ -635,7 +664,9 @@ NODE_ENV=production ../../node_modules/.bin/sequelize db:create
 那么主要就是要 了解 queryInterface 了
 queryInterface封装了对表的 删除，创建，重命名，查询，修改字段，添加字段等等
 再次生成模型
+```
 ../../node_modules/.bin/sequelize migration:generate --name user
+```
 然后修改 migation 中的代码
 
 添加字段 firstName3
@@ -675,14 +706,12 @@ module.exports = {
 ```
 
 
-修改迁移文件之前，最好先修改对应，不然到时候插入数据报错
+修改迁移文件之前，最好先修改对应，不然到时候插入数据报错，
 
----
 
-开发者不一定需要用这个，必须按照官方规定格式
+开发者不一定需要用这个，必须按照官方规定格式。
 
-----
-
+# jwt
 下面讲jwt授权
 接口需要token验证
 ```
@@ -692,36 +721,38 @@ npm install koa-jwt --save
 //签发token；jwt的规范实现
 npm install jsonwebtoken --save
 ```
-模块功能可以查看npm介绍或者官网介绍
+模块功能可以查看npm介绍或者官网介绍。
 
-然后在入口文件中配置
-然后在登录接口签发token
-token策略根据应用来定，是否有失效，具体失效时间，是否有refresh_token
+然后在入口文件中配置，
+然后在登录接口签发 token
+token 策略根据应用来定，是否有失效，具体失效时间，是否有 refresh_token
 
-然后做登录之后的查询
-如果不带token到header上，就会返回401 Authentication Error
+然后做登录之后的查询，
+如果不带token到header上，就会返回401 Authentication Error。
 
-把token带上，可以用命令行工具测试
+把token带上，可以用命令行工具测试：
 ```
 curl -X GET -H 'authorization: Bearer ***token' http://localhost:8113/api/user
 ```
-
-----
-有了token认证，然后把其他几个实体创建一下，
-开发几个restful风格接口
+# restful-api
+有了 token 认证，然后把其他几个实体创建一下，
+开发几个 restful 风格接口：
 ```
 git checkout -b share14
 ```
-开发接口的时候看是喜欢写sql还是直接用orm库
+开发接口的时候看是喜欢写sql还是直接用orm库,
 我这边用sql,与orm库分布演示两个实体的curd
 
 1.费用的curd--sql
 2.权限的curd--orm
 
-###针对费用 fee
+## 针对费用 fee
 1.封装dao层
+
 2.封装service
+
 3.因为简单且是演示（真实项目，可以考虑走controller），
+
 直接添加到路由，不走控制器
 
 请求接口的时候，token校验失败提示不友好，
@@ -730,14 +761,17 @@ git checkout -b share14
 error.js
 import error from './middleware/error';
 
-###针对权限
+## 针对权限
 1.定义模型
+
 2.封装service
+
 3.因为简单且是演示（真实项目，可以考虑走controller），
 直接添加到路由，不走控制器
+
 //todo
 添加备注
-
+## 接口测试
 有一些接口设计与定义
 另外切一个分支来完成接口开发与测试
 ```
@@ -746,7 +780,7 @@ git checkout -b share15
 把接口完善之后，把数据库与表创建一下 tech_share_dev
 导出sql
 然后先用postman 接口测试
-
+## koa-bodyparser
 ```
 //请求体处理，方便获取查询参数
 npm i --save koa-bodyparser
@@ -819,38 +853,45 @@ http://localhost:8113/api/permission
 http://localhost:8113/doc.json
 ```
 
-
----
+# pm2 部署
 pm2 部署
 ```
 git checkout -b share15
 ```
-我这边手动部署一下
-服务器先要安装mysql，pm2,
-
+我这边手动部署一下，
+服务器先要安装 mysql，pm2,
+## 部署步骤
 0.修改端口，打包代码
+```
 1.clone代码
 git clone https://github.com/QCCS/tech-share-s.git
 cd tech-share-s
 git checkout -b share16
 git pull origin share16
+```
 
 2.创建数据库 source
+```
 cd src
 source tech_share_prod.sql;
+```
 
 3.启动
+```
 cd ..
 npm i --no-package-lock
 修改配置文件
 npm run webpackProd
 pm2 start dist/index.js -i 0 --name "tech-share-s"
+```
 
 4.访问
+```
 http://47.100.13.168:9113/swagger
+```
 
 
-nginx配置
+## nginx配置
 ```
 git checkout -b share17
 ```
@@ -870,16 +911,15 @@ server {
 }
 ```
 
-
 之后访问
 ```
 http://share.json119.com/api/login?mobile=15921552946&password=mac123
 ```
+# koa2-file-upload
 添加上传文件中间件
 ```
 git checkout -b share18
 ```
----
 安装
 ```
 npm i koa2-file-upload
@@ -922,41 +962,60 @@ http://localhost:9113/images/img/2018/09/29/e95952c8-843f-42be-bc3e-ce0b5f56cca8
 
 ```
 
-#后续
+# 后续-博客系统
 添加几个表，成为博客系统
+```
 git checkout -b share19
+```
 
-sequelize会需要几个文件夹，并且文件夹在运行目录的跟目录
+sequelize 会需要几个文件夹，并且文件夹在运行目录的跟目录,
 所以，
+```
 cd src
 ../node_modules/.bin/sequelize init
+```
+
 这样就会自动生成
+
+```
 config/config.json
 models
 migrations
+```
+
 然后创建 migration 文件
 运行命令
+```
 ../node_modules/.bin/sequelize migration:generate --name model_name
-
+```
+## 设置实体模型 model
 比如创建 image 表，先创建 model image
 然后运行命令
+```
 ../node_modules/.bin/sequelize migration:generate --name image
+```
 在 migrations 目录下，生成 image 的迁移文件
 
 在迁移文件中根据model中定义的字段，添加逻辑
 运行
+```
 ../node_modules/.bin/sequelize db:migrate
+```
 即可生成对应的表
+## 创建迁移文件 migration
 
-如果修改模型-再次生成migration
+如果修改模型-再次生成 migration
+```
 ../node_modules/.bin/sequelize migration:generate --name image
 ../node_modules/.bin/sequelize db:migrate
+```
 或者直接修改迁移文件
+```
 ../node_modules/.bin/sequelize db:migrate:undo
 ../node_modules/.bin/sequelize db:migrate
-
-创建以下表
-tables
+```
+## 创建表
+创建以下表：tables
 ```
 image
 comment
@@ -967,23 +1026,26 @@ post_comment
 post_like
 post_read
 ```
---
 依次运行，生成迁移文件
 ```
 ../node_modules/.bin/sequelize migration:generate --name image
 ../node_modules/.bin/sequelize migration:generate --name comment
 ../node_modules/.bin/sequelize migration:generate --name tag
 ../node_modules/.bin/sequelize migration:generate --name post
-```
 ... ...
+
+```
 
 修改对应迁移文件
 
 修改完成之后
+```
 ../node_modules/.bin/sequelize db:migrate
-
+```
 可以查看数据库
 就生成了表
+```
+
 mysql> show tables;
 +--------------------------+
 | Tables_in_tech_share_dev |
@@ -1107,8 +1169,9 @@ mysql> desc post_like;
 +-----------+----------+------+-----+---------+----------------+
 5 rows in set (0.01 sec)
 
-
-下一步可以在service目录下创建
+```
+## 创建实体 service
+下一步可以在 service 目录下创建
 几个表实体对应查询的 service
 对这几个表的 curd
 ```
@@ -1119,6 +1182,7 @@ mkdir image comment post tag postTag postComment postLike postRead
 ```
 依次创建 service 文件
 
+## 创建实体 controller
 依次创建 controller 文件
 ```
 image comment post tag postTag postComment postLike postRead
@@ -1131,6 +1195,7 @@ postModuleRouter.js
 import postModuleRouter from './route/postModuleRouter';
 app.use(postModuleRouter.router.routes());
 ```
+## 定义接口
 分别定义博客系统各实体的路由
 ```
 router
@@ -1141,8 +1206,9 @@ router
     .get('/comment', commentController.getAllComment)
 ```
 注意：模型与迁移文件是下划线命名，service 与 controller 是驼峰命名
-
+## 测试接口
 测试 api
+```
 comment
 curd ok
 
@@ -1160,32 +1226,88 @@ post_tag
 post_like
 post_read
 curd ok
-
-创建评论表
-创建博客评论关联表
+```
 
 通过 博客id 查询该博客评论
 
 博客系统完成
-用户注册，登陆
-博客评论
-博客标签
-博客点赞
-博客阅读量
 
+用户注册，登陆
+
+博客评论
+
+博客标签
+
+博客点赞
+
+博客阅读量
+## 事务
 添加事务
 创建评论，关联博客
 创建标签，关联博客
+```
+async function createTag(user_id, tag_name, post_id) {
+    let res = null;
+    let pt = null;
+    // 创建事务
+    // 情况1：只创建标签
+    // 情况2：在博客上添加标签
+    return db.sequelize.transaction(async function (t) {
+        // 在事务中执行操作
+        res = await tag.create(
+            {
+                user_id: user_id,
+                tag: tag_name
+            },
+            {transaction: t}
+        );
+        if (post_id) {
+            pt = await postTag.create(
+                {
+                    post_id,
+                    tag_id: res.id
+                },
+                {
+                    transaction: t
+                }
+            );
+            // 事务回滚
+            // pt = await postTag.create(
+            //     {},
+            //     {
+            //         transaction: t
+            //     }
+            // );
+        }
+        // 返回给成功的回调
+        return {
+            res,
+            pt
+        }
+    }).then(function (results) {
+        /* 操作成功，事务会自动提交 */
+        //返回到控制器
+        return results;
+    }).catch(function (err) {
+        /* 操作失败，事件会自动回滚 */
+        return err;
+    });
+}
 
-##后端渲染博客前台页面
+```
+## 后端渲染博客前台页面
+后端渲染博客前台页面
+
 添加博客列表
+
 添加博客详情页面
+
 添加路由
 ```
 .get('/blog', async (ctx) => {})
 .get('/blog/:id', async (ctx) => {})
 ```
-博客前台页面放弃认证
+博客前台页面放弃认证:
 ```
 app.use(koaJwt({secret: config.secret.sign}).unless({
     path: [
@@ -1193,18 +1315,17 @@ app.use(koaJwt({secret: config.secret.sign}).unless({
     ]
 }));
 ```
-在views目录下添加ejs模板页面
+在 views 目录下添加 ejs 模板页面
 ```
 blog.ejs
 blog_index.ejs
 ```
 ejs语法参考
+```
 http://ejs.co
+```
 
-todo
-redis token refresh_token存储
-用户点赞
-logs
+## logs
 //日志处理
 ```
 app.use(logger((str, args) => {
@@ -1215,9 +1336,12 @@ app.use(logger((str, args) => {
     fs.appendFile('logs/' + logFileName, str);
 }));
 ```
-settings
-test
-
-添加文档
+# 添加文档
+```
 docs
 git checkout -b share21
+```
+http://localhost:63342/tech-share-s/docs
+
+## 下次继续前后端自动化测试，请等待 ):
+ 

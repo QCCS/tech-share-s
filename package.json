@@ -24,7 +24,7 @@
     "restful",
     "pm2",
     "nginx",
-    "swpper"
+    "swagger"
   ],
   "author": "qccs",
   "license": "ISC",
