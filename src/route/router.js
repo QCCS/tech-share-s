@@ -59,8 +59,9 @@ router
         let likes = await postLikeService.getLikeByPostId(ctx.params.id);
         let reads = await postReadService.getReadByPostId(ctx.params.id);
         await ctx.render('blog', {
+            user:user,
             title:post.title,
-            user:post.user_id,
+            user_id:post.user_id,
             post,
             comments,
             tags,
