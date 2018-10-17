@@ -1277,6 +1277,11 @@ CREATE TABLE `post_tag` (
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 ```
 
+安装部署
+有sequlize 与原生 node 结合开发
+运行环境，与生产数据库
+git checkout -b share23
+
 todo
 redis token refresh_token存储
 用户点赞
