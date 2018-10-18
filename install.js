@@ -8,16 +8,19 @@ var install = 'npm i --no-package-lock';
 var mysqlSource = 'mysql -uroot -pmac123 -f -e "source tech_share_prod.sql"';
 
 // dev 通过迁移文件 migrate
-var sequlizeDevDB ='../node_modules/.bin/sequelize db:create';
-var sequlizeDevTable ='../node_modules/.bin/sequelize db:migrate';
+var sequlizeDevDB = 'node_modules/.bin/sequelize db:create';
+var sequlizeDevTable = 'node_modules/.bin/sequelize db:migrate';
 
 // prod 通过迁移文件 migrate
-var sequlizeProdDB ='NODE_ENV=production ../node_modules/.bin/sequelize db:create';
-var sequlizeDevTable ='NODE_ENV=production ../node_modules/.bin/sequelize db:migrate';
+var sequlizeProdDB = 'NODE_ENV=production node_modules/.bin/sequelize db:create';
+var sequlizeDevTable = 'NODE_ENV=production node_modules/.bin/sequelize db:migrate';
+
+// 填充数据
+var seedData = 'node_modules/.bin/sequelize db:seed:all';
 /*
 * 注意
-* 1.只有对应的表创建了migrate，运行命令才能创建表
-* 2.migrate只能创建表结构，数据库里面已有的数据不会创建
+* 1.只有对应的表创建了 migrate，运行命令才能创建表
+* 2.migrate 只能创建表结构，数据库里面已有的数据不会创建
 * */
 
 // node

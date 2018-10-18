@@ -15,6 +15,7 @@ let tag = sequelize.define('tag',
         tag:{
             type: Sequelize.STRING,
             allowNull: false,
+            unique: true
         }
     },
     {

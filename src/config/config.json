@@ -4,20 +4,50 @@
     "password": "mac123",
     "database": "tech_share_dev",
     "host": "127.0.0.1",
-    "dialect": "mysql"
+    "dialect": "mysql",
+    "dialectOptions": {
+      "charset": "utf8mb4",
+      "collate": "utf8mb4_unicode_ci",
+      "supportBigNumbers": true,
+      "bigNumberStrings": true
+    },
+    "define": {
+      "underscored": true,
+      "charset":"utf8mb4"
+    }
   },
   "test": {
     "username": "root",
     "password": "mac123",
     "database": "tech_share_test",
     "host": "127.0.0.1",
-    "dialect": "mysql"
+    "dialect": "mysql",
+    "dialectOptions": {
+      "charset": "utf8mb4",
+      "collate": "utf8mb4_unicode_ci",
+      "supportBigNumbers": true,
+      "bigNumberStrings": true
+    },
+    "define": {
+      "underscored": true,
+      "charset":"utf8mb4"
+    }
   },
   "production": {
     "username": "root",
     "password": "mac123",
     "database": "tech_share_prod",
     "host": "127.0.0.1",
-    "dialect": "mysql"
+    "dialect": "mysql",
+    "dialectOptions": {
+      "charset": "utf8mb4",
+      "collate": "utf8mb4_unicode_ci",
+      "supportBigNumbers": true,
+      "bigNumberStrings": true
+    },
+    "define": {
+      "underscored": true,
+      "charset":"utf8mb4"
+    }
   }
 }

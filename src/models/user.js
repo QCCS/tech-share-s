@@ -11,6 +11,7 @@ let user = sequelize.define('user',
         name: {
             type: Sequelize.STRING,
             allowNull: false,
+            unique: true
         },
         password: {
             type: Sequelize.STRING,
@@ -19,6 +20,7 @@ let user = sequelize.define('user',
         mobile: {
             type: Sequelize.STRING,
             allowNull: false,
+            unique: true
         },
         email: {
             type: Sequelize.STRING,

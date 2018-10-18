@@ -1,7 +1,7 @@
 //角色-权限模型
 import db from '../utils/sequelizeQuery';
 const {sequelize, Sequelize} = db;
-let userRole = sequelize.define('role-permission',
+let rolePermission = sequelize.define('role_permission',
     {
         id: {
             type: Sequelize.INTEGER,
