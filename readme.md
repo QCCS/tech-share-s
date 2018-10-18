@@ -1282,6 +1282,25 @@ CREATE TABLE `post_tag` (
 运行环境，与生产数据库
 git checkout -b share23
 
+安装步骤
+```
+//安装依赖与打包
+node install init
+node install buildProd
+//准备数据库
+node install mysqlCreateProd
+node install sequlizeProdTable
+node install seedDataProd
+
+//一键初始化以上步骤
+node install initAll
+//运行
+node dist/dist.js
+或者
+supervisor dist/index.js
+
+```
+
 todo
 redis token refresh_token存储
 用户点赞

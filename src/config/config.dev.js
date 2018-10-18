@@ -2,8 +2,9 @@
  * Created by zhouli on 18/9/24
  * 配置信息
  */
+import appSetting from '../../settings/appSettings';
 let config = {
-    port: 9113,
+    port: appSetting.development.port,
     mysql: {
         host: '127.0.0.1',
         user: 'root',

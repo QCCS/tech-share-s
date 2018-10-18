@@ -7,7 +7,8 @@ let commandName = args[0];
 var init = 'npm i --no-package-lock';
 
 // 建议先脚本创建数据库 sequelize创建数据库之后，需要修改字符集
-var mysqlCreate = 'mysql -uroot -pmac123 -f -e "create database IF NOT EXISTS tech_share_prod DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci"';
+var mysqlCreateProd = 'mysql -uroot -pmac123 -f -e "create database IF NOT EXISTS tech_share_prod DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci"';
+var mysqlCreateDev = 'mysql -uroot -pmac123 -f -e "create database IF NOT EXISTS tech_share_dev DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci"';
 // mysql
 // 直接导入sql逻辑备份文件
 var mysqlSource = 'mysql -uroot -pmac123 -f -e "source src/tech_share_prod.sql"';
@@ -40,8 +41,10 @@ var runProd = 'npm run superdev';
 
 
 var commandJson = {
+    initAll,
     init,
-    mysqlCreate,
+    mysqlCreateProd,
+    mysqlCreateDev,
     mysqlSource,
     sequlizeDevDB,
     sequlizeDevTable,
@@ -55,22 +58,22 @@ var commandJson = {
     runProd,
 }
 var commandJsonExplain = {
+    initAll: "打包与数据库环境准备",
     init: "安装依赖",
-    mysqlCreate: "shell创建数据库",
+    mysqlCreateProd: "shell创建Prod数据库",
+    mysqlCreateDev: "shell创建dev数据库",
     mysqlSource: "直接导入sql文件",
     sequlizeDevDB: "sequlize创建dev数据库",
     sequlizeDevTable: "sequlize创建dev数据表",
-    sequlizeProdDB: "sequlize创建生产数据库",
-    sequlizeProdTable: "sequlize创建生产数据表",
+    sequlizeProdDB: "sequlize创建Prod数据库",
+    sequlizeProdTable: "sequlize创建Prod数据表",
     seedDataDev: "dev填充数据",
     seedDataProd: "prod填充数据",
     buildDev: "打包开发环境",
     runDev: "打包开发环境",
-    buildProd: "打包生产环境",
-    runProd: "运行生产环境",
+    buildProd: "打包Prod环境",
+    runProd: "运行Prod环境",
 }
-//运行命令
-runCommand(commandName);
 
 function runCommand(command) {
     var sh = commandJson[command];
@@ -87,8 +90,35 @@ function runCommand(command) {
     } else {
         console.log("找不到定义的命令，请从下面命令选择");
         for (let key in commandJson) {
-            console.log(commandJsonExplain[key]+"，请运行：node install " + key);
+            console.log(commandJsonExplain[key] + "，请运行：node install " + key);
         }
     }
+}
 
+// 一键初始化项目准备数据库环境
+function initAll(callback) {
+    exec("node install init", function (err, stdout, stderr) {
+        console.log(stdout);
+        exec("node install buildProd", function (err, stdout, stderr) {
+            console.log(stdout);
+            exec("node install mysqlCreateProd", function (err, stdout, stderr) {
+                console.log(stdout);
+                exec("node install sequlizeProdTable", function (err, stdout, stderr) {
+                    console.log(stdout);
+                    exec("node install seedDataProd", function (err, stdout, stderr) {
+                        console.log(stdout);
+                        callback && callback();
+                    });
+                });
+            });
+        });
+    });
+}
+
+//运行命令
+if (commandName === "initAll") {
+    initAll();
+}
+else {
+    runCommand(commandName);
 }
