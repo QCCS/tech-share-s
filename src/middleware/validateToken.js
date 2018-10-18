@@ -3,7 +3,7 @@
  */
 import jwt from 'jsonwebtoken';
 import config from '../config/index';
-export default function error() {
+export default function validateToken() {
     return async function (ctx, next) {
         try {
             const token = ctx.header.authorization ; // 获取jwt

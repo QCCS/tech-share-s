@@ -1,7 +1,5 @@
-import fs from 'fs';
 import Koa from 'koa';
 import Router from 'koa-router';
-import logger from 'koa-logger';
 import staticServer from 'koa-static';
 import koaJwt from 'koa-jwt';
 import bodyParser from 'koa-bodyparser';
@@ -11,7 +9,8 @@ import uploader from 'koa2-file-upload';
 import indexController from './controller/index';
 import config from './config/index';
 //拦截校验token，解密token
-import error from './middleware/error';
+import validateToken from './middleware/validateToken';
+import logNote from './middleware/logNote';
 import views from 'koa-views';
 import router from './route/router';
 import postModuleRouter from './route/postModuleRouter';
@@ -62,7 +61,7 @@ app.use(
     }),
 );
 //token错误校验必须在 koaJwt 之后
-app.use(error());
+app.use(validateToken());
 
 // Must be used before any router is used
 // 无模板引擎
@@ -75,13 +74,8 @@ app.use(views(process.cwd() + '/dist/views', {
 }))
 
 //日志处理
-app.use(logger((str, args) => {
-    console.log(str)
-    let t = new Date();
-    let _t = t.getFullYear() + "-" + (t.getMonth() + 1) + "-" + t.getDate() + "-" + t.getHours();
-    let logFileName = "log" + _t + '.txt';
-    fs.appendFile('logs/' + logFileName, str);
-}));
+app.use(logNote());
+
 //请求体处理
 app.use(bodyParser());
 //统一错误处理
@@ -98,3 +92,4 @@ app.use(indexController)
 
 //服务端口
 app.listen(config.port);
+console.log("监听端口："+config.port)
