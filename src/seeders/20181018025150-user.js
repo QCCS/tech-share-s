@@ -2,22 +2,15 @@
 
 module.exports = {
     up: (queryInterface, Sequelize) => {
-        /*
-          Add altering commands here.
-          Return a promise to correctly handle asynchronicity.
-
-          Example:
-              */
-
         return queryInterface.bulkInsert('user', [
             {
-                name: 'json.周',
+                name: 'admin1',
                 password: 'mac123',
                 mobile: '15921552946',
                 email: '15921552946@qq.com'
             },
             {
-                name: 'json.立',
+                name: 'admin2',
                 password: 'mac123',
                 mobile: '15921552947',
                 email: '15921552947@qq.com'
@@ -26,12 +19,6 @@ module.exports = {
     },
 
     down: (queryInterface, Sequelize) => {
-        /*
-          Add reverting commands here.
-          Return a promise to correctly handle asynchronicity.
-          Example:
-              */
-
         return queryInterface.bulkDelete('user', null, {});
     }
 };
