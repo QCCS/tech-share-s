@@ -2,14 +2,12 @@
   "name": "tech-share-s",
   "version": "1.0.0",
   "description": "在github上创建一个仓库，clone到本地 创建readme.md",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
-    "test": "test",
     "superdev": "supervisor dist/index.js",
     "dev": "node dist/index.js",
     "webpack": "node_modules/.bin/webpack",
-    "webpackProd": "NODE_ENV=prod node_modules/.bin/webpack",
-    "build": "babel src/index.js -o dist/index.js"
+    "webpackProd": "NODE_ENV=prod node_modules/.bin/webpack"
   },
   "repository": {
     "type": "git",
