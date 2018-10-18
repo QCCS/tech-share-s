@@ -1,3 +1,4 @@
+//备份数据
 const Backup = require('mysql-backup-db');
 var config = {
     mysql: {

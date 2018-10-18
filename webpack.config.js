@@ -1,5 +1,7 @@
 let externals = _externals();
 const copyWebpackPlugin = require('copy-webpack-plugin');
+let env = process.env.NODE_ENV || 'development';
+console.log("打包环境："+env);
 module.exports = {
     entry: __dirname + '/src/index.js',//入口文件
     output: {
@@ -11,7 +13,7 @@ module.exports = {
     // devtool : "hidden-source-map",
     devtool: "nosources-source-map",
     externals: externals,
-    mode: "development",
+    mode: env === "prod" ? "production" : "development",
     module: {
         rules: [
         ]
