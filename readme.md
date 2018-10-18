@@ -1282,8 +1282,22 @@ CREATE TABLE `post_tag` (
 运行环境，与生产数据库
 git checkout -b share23
 
-安装步骤
+环境准备
 ```
+mysql 5.6
+node 8+
+pm2 2.8
+```
+安装项目
+```
+git clone -b share23 https://github.com/QCCS/tech-share-s.git
+node install initAll
+pm2 start dist/index.js -i 0 --name "app-name"
+```
+详细安装步骤
+```
+//下载项目
+git clone -b share23 https://github.com/QCCS/tech-share-s.git
 //安装依赖与打包
 node install init
 node install buildProd
@@ -1298,7 +1312,8 @@ node install initAll
 node dist/dist.js
 或者
 supervisor dist/index.js
-
+或者
+pm2 start dist/index.js -i 0 --name "app-name"
 ```
 多次安装，注意 在settings目录 修改数据库与端口
 
@@ -1308,3 +1323,5 @@ redis token refresh_token存储
 用户点赞
 settings
 test
+
+

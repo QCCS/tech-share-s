@@ -1403,6 +1403,48 @@ CREATE TABLE `post_tag` (
   CONSTRAINT `tag_id_constraint_name` FOREIGN KEY (`tag_id`) REFERENCES `tag` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 ```
+# 脚本安装
+```
+git checkout -b share23
+```
+我写了一个安装脚本 install.js，可以通过命令行安装，
+在环境准备好的情况下，只需要三行命令即可安装博客系统
+
+环境准备
+```
+mysql 5.6
+node 8+
+pm2 2.8
+```
+安装项目
+```
+git clone -b share23 https://github.com/QCCS/tech-share-s.git
+node install initAll
+pm2 start dist/index.js -i 0 --name "app-name"
+```
+详细安装步骤
+```
+//下载项目
+git clone -b share23 https://github.com/QCCS/tech-share-s.git
+//安装依赖与打包
+node install init
+node install buildProd
+//准备数据库
+node install mysqlCreateProd
+node install sequlizeProdTable
+node install seedDataProd
+
+//一键初始化以上步骤
+node install initAll
+//运行
+node dist/dist.js
+或者
+supervisor dist/index.js
+或者
+pm2 start dist/index.js -i 0 --name "app-name"
+```
+多次安装，注意在 settings 目录修改数据库与端口。
+
 
 ## 下次继续前后端自动化测试，请等待 ):
  
