@@ -9,7 +9,7 @@ let config = {
         host: '127.0.0.1',
         user: 'root',
         password: 'mac123',
-        database: 'tech_share_prod',
+        database: appSetting.production.database,
         port: '3306'
     },
     secret:{

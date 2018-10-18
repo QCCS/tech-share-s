@@ -1300,6 +1300,8 @@ node dist/dist.js
 supervisor dist/index.js
 
 ```
+多次安装，注意 在settings目录 修改数据库与端口
+
 
 todo
 redis token refresh_token存储

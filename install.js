@@ -1,14 +1,16 @@
 // 安装步骤
+const fs = require('fs');
 var exec = require('child_process').exec;
 let args = process.argv.splice(2);
 let commandName = args[0];
-
+var data = fs.readFileSync('./settings/appSettings.js', 'utf8');
+var conf = JSON.parse(data.split("default")[1]);
 // 安装依赖
 var init = 'npm i --no-package-lock';
 
 // 建议先脚本创建数据库 sequelize创建数据库之后，需要修改字符集
-var mysqlCreateProd = 'mysql -uroot -pmac123 -f -e "create database IF NOT EXISTS tech_share_prod DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci"';
-var mysqlCreateDev = 'mysql -uroot -pmac123 -f -e "create database IF NOT EXISTS tech_share_dev DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci"';
+var mysqlCreateProd = 'mysql -uroot -pmac123 -f -e "create database IF NOT EXISTS '+conf.production.database+' DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci"';
+var mysqlCreateDev = 'mysql -uroot -pmac123 -f -e "create database IF NOT EXISTS '+conf.development.database+' DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci"';
 // mysql
 // 直接导入sql逻辑备份文件
 var mysqlSource = 'mysql -uroot -pmac123 -f -e "source src/tech_share_prod.sql"';
@@ -41,6 +43,7 @@ var runProd = 'npm run superdev';
 
 
 var commandJson = {
+    help:"",
     initAll,
     init,
     mysqlCreateProd,
@@ -58,6 +61,7 @@ var commandJson = {
     runProd,
 }
 var commandJsonExplain = {
+    help:"显示帮助",
     initAll: "打包与数据库环境准备",
     init: "安装依赖",
     mysqlCreateProd: "shell创建Prod数据库",
@@ -118,6 +122,9 @@ function initAll(callback) {
 //运行命令
 if (commandName === "initAll") {
     initAll();
+}
+else if(commandName === "help"){
+    console.log("请查看readme,或者docs目录下的文档");
 }
 else {
     runCommand(commandName);
