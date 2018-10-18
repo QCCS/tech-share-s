@@ -17,7 +17,6 @@ var sequelize = new Sequelize(mysqlConf.database, mysqlConf.user, mysqlConf.pass
     },
     dialectOptions: {
         charset: "utf8",
-        collate: "utf8_general_ci",
         supportBigNumbers: true,
         bigNumberStrings: true
     },

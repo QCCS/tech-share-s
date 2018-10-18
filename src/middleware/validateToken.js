@@ -32,9 +32,7 @@ export default function validateToken() {
                     message: '认证失败'
                 }
             } else {
-                err.status = 404;
-                ctx.body = '404';
-                console.log('错误有点离谱，无法识别错误：', err);
+                ctx.body = err;
             }
         }
     }

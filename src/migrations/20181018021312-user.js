@@ -19,7 +19,8 @@ module.exports = {
           },
           mobile: {
               allowNull: false,
-              type: Sequelize.STRING
+              type: Sequelize.STRING,
+              unique: true
           },
           email: {
               allowNull: true,
