@@ -1,8 +1,9 @@
 // 定义路由
 import Router from 'koa-router';
 import loginController from '../controller/LoginController';
+import userController from '../controller/user';
 import roleController from '../controller/roleController';
-import userController from '../controller/userController';
+import userGetController from '../controller/userController';
 import roleAddController from '../controller/roleAddController';
 
 // 费用CURD
@@ -71,8 +72,9 @@ router
     })
     //测试用get
     .get('/login', loginController)
+    .post('/register', userController.createUser)
     .get('/role/add', roleAddController)
-    .get('/user', userController)
+    .get('/user', userGetController)
     .get('/role', roleController)
     //费用curd
     .post('/fee', async (ctx) => {

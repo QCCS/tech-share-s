@@ -5,7 +5,7 @@ var config = {
         host: '127.0.0.1',
         user: 'root',
         password: 'mac123',
-        database: 'tech_share_dev',
+        database: 'tech_share_prod',
         port: '3306',
         backupPath:"./src/backup-db/"
     }

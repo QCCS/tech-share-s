@@ -5,6 +5,9 @@
 import mysql from 'mysql';
 import config from '../config/index';
 let mysqlConf = config.mysql;
+
+console.log("使用数据库 "+mysqlConf.database);
+
 const pool = mysql.createPool({
     host: mysqlConf.host,
     user: mysqlConf.user,

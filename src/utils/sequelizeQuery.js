@@ -5,6 +5,7 @@
 import Sequelize from 'sequelize';
 import config from '../config/index';
 let mysqlConf = config.mysql;
+console.log("使用数据库 "+mysqlConf.database);
 var sequelize = new Sequelize(mysqlConf.database, mysqlConf.user, mysqlConf.password, {
     host: mysqlConf.host,
     dialect: 'mysql',
@@ -14,6 +15,20 @@ var sequelize = new Sequelize(mysqlConf.database, mysqlConf.user, mysqlConf.pass
         min: 0,
         idle: 10000
     },
+    dialectOptions: {
+        charset: "utf8",
+        collate: "utf8_general_ci",
+        supportBigNumbers: true,
+        bigNumberStrings: true
+    },
+    define: {
+        underscored: true,
+        charset: "utf8",
+        dialectOptions: {
+            collate: "utf8_general_ci",
+        },
+    }
+
 });
 let db = {
     sequelize,
