@@ -6,14 +6,6 @@ import roleController from '../controller/roleController';
 import userGetController from '../controller/userController';
 import roleAddController from '../controller/roleAddController';
 
-// 费用CURD
-import addFee from '../service/fee/AddFeeService';
-import deleteFee from '../service/fee/DeleteFeeService';
-import updateFee from '../service/fee/UpdateFeeService';
-import searchFee from '../service/fee/SearchFeeService';
-import getFeeList from '../service/fee/GetFeeListService';
-import getFeeInfo from '../service/fee/GetFeeService';
-
 //权限curd
 import permissionService from '../service/permission/permissionService'
 
@@ -76,45 +68,6 @@ router
     .get('/role/add', roleAddController)
     .get('/user', userGetController)
     .get('/role', roleController)
-    //费用curd
-    .post('/fee', async (ctx) => {
-        let data = ctx.request.body;
-        console.log(ctx.user);
-        console.log(data);
-        let time = new Date();
-        console.log(time);
-        //从token中解码获取
-        let userId = ctx.user.id;
-        ctx.body = await addFee(data.title, data.des, data.total, time, userId);
-    })
-    .delete('/fee/:id', async (ctx) => {
-        console.log(ctx.params.id);
-        //可以做校验
-        // let userId = data.userId;
-        ctx.body = await deleteFee(ctx.params.id);
-    })
-    .put('/fee', async (ctx) => {
-        let data = ctx.request.body;
-        console.log(ctx.user);
-        console.log(data);
-        let time = new Date();
-        console.log(time);
-        //从token中解码获取
-        let userId = ctx.user.id;
-        ctx.body = await updateFee(data.title, data.des, data.total, time, userId, data.id);
-    })
-    .get('/feeList', async (ctx) => {
-        ctx.body = await getFeeList();
-    })
-    .get('/fee', async (ctx) => {
-        //以描述或者名称搜索
-        let data = ctx.request.query;
-        ctx.body = await searchFee(data.title, data.des);
-    })
-    .get('/fee/:id', async (ctx) => {
-        console.log(ctx.params.id);
-        ctx.body = await getFeeInfo(ctx.params.id);
-    })
     .post('/permission', async (ctx) => {
         let data = ctx.request.body;
         let permission = await permissionService.createPermission(data.id,data.name);
