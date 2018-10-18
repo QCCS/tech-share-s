@@ -1444,7 +1444,10 @@ supervisor dist/index.js
 pm2 start dist/index.js -i 0 --name "app-name"
 ```
 多次安装，注意在 settings 目录修改数据库与端口。
-
+运行过程中，欲逻辑备份数据
+```
+node backup-db.js
+```
 
 ## 下次继续前后端自动化测试，请等待 ):
  
